@@ -15,7 +15,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     @IBOutlet weak var listTableView: UITableView!
     var placesArray: NSArray?
     var currentPlaceType: PlaceType = .Food
-    var radius: Double?
+    var radius: Float = 5000
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
          self.sideMenuController()?.sideMenu?.delegate = self
         BMSUtil.showProressHUD()
         BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation) -> () in
-            BMSNetworkManager.sharedInstance.sendRequest(radius: 5000, type: self.stringForPlaceType(self.currentPlaceType), completionBlock: { (resultArray: NSArray?, error) -> () in
+            BMSNetworkManager.sharedInstance.sendRequest(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType), completionBlock: { (resultArray: NSArray?, error) -> () in
                 println("dict = \(resultArray)")
                 self.placesArray = resultArray
                 self.listTableView.reloadData()
