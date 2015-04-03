@@ -11,18 +11,17 @@ import UIKit
 class BMSSlideMenuTableViewController: UITableViewController {
     var selectedMenuItem : Int = 1
     var lastSelectedIndexPath: NSIndexPath?
-   // var profileObj: ProfileModalData?
     var isFromProfile: Bool?
-    var destViewController : UIViewController!
+    var destViewController : BMSListViewController!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Customize apperance of table view
-        tableView.contentInset = UIEdgeInsetsMake(20.0, 0, 0, 0) //
+        tableView.contentInset = UIEdgeInsetsMake(64.0, 0, 0, 0) //
         tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         tableView.backgroundColor = UIColor.clearColor()
-        tableView.scrollEnabled = false
+        tableView.scrollEnabled = true
         lastSelectedIndexPath = NSIndexPath(forRow: 1, inSection: 0)
         
 //        var backGroundImageV = UIImageView(image: UIImage(contentsOfFile: NSString(format: "%@/%@", NSBundle.mainBundle().resourcePath!,"Hamburger.png")))
@@ -44,7 +43,6 @@ class BMSSlideMenuTableViewController: UITableViewController {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Table view data source
@@ -56,7 +54,7 @@ class BMSSlideMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return 4
+        return 8
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -73,22 +71,26 @@ class BMSSlideMenuTableViewController: UITableViewController {
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CELL")
                 cell!.backgroundColor = UIColor.clearColor()
-                cell!.textLabel?.textColor = UIColor.lightGrayColor()
                 let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
-                selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
+                selectedBackgroundView.backgroundColor = UIColor.whiteColor()
                 cell!.selectedBackgroundView = selectedBackgroundView
+                cell?.textLabel?.textColor = UIColor.darkGrayColor()
             }
             switch indexPath.row {
-            case 1: cell!.textLabel?.text = "Trips"
-            case 2: cell!.textLabel?.text = "Contacts"
-            case 3: cell!.textLabel?.text = " Profile"
+            case 1: cell!.textLabel?.text = "Food"
+            case 2: cell!.textLabel?.text = "Gym"
+            case 3: cell!.textLabel?.text = "Hospital"
+            case 4: cell!.textLabel?.text = "Restaurant"
+            case 5: cell!.textLabel?.text = "School"
+            case 6: cell!.textLabel?.text = "Spa"
+            case 7: cell!.textLabel?.text = "Favorites"
             default : break
             }
             //Change cell's tint color
-            cell?.tintColor = UIColor.whiteColor()
+            cell?.tintColor = UIColor.darkGrayColor()
             cell?.textLabel?.font = UIFont(name: "Helvetica-Light", size: 23.0)
             cell?.accessoryType = (lastSelectedIndexPath?.row == indexPath.row) ? .Checkmark : .None
-            cell?.selectionStyle = .Default
+            cell?.selectionStyle = .None
             return cell!
         }
         
@@ -96,7 +98,7 @@ class BMSSlideMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 190.0
+            return 75.0
         }
         
         return 50.0
@@ -116,15 +118,6 @@ class BMSSlideMenuTableViewController: UITableViewController {
             newCell?.accessoryType = .Checkmark
             lastSelectedIndexPath = indexPath
         }
-        if indexPath.row == 0 {
-            if let lastSelectedIndexPath = lastSelectedIndexPath {
-                let oldCell = tableView.cellForRowAtIndexPath(lastSelectedIndexPath)
-                oldCell?.accessoryType = .None
-            }
-            lastSelectedIndexPath = NSIndexPath(forRow: 3, inSection: 0)
-            let newCell = tableView.cellForRowAtIndexPath(lastSelectedIndexPath!)
-            newCell?.accessoryType = .Checkmark
-        }
         
         if (indexPath.row == selectedMenuItem) {
             self.toggleSideMenuView()
@@ -135,20 +128,17 @@ class BMSSlideMenuTableViewController: UITableViewController {
         //Present new view controller
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
         switch (indexPath.row) {
-        case 0:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LSKProfileController") as UIViewController
-            break
-        case 1:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LSKTripsController") as UIViewController
-            break
-        case 2:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LSKContactController") as UIViewController
-            break
+        case  1, 2, 3, 4, 5, 6:
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BMSListViewController") as BMSListViewController
+            destViewController.currentPlaceType = PlaceType(rawValue: indexPath.row)!
+            sideMenuController()?.setContentViewController(destViewController)
+        case 7:
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BMSListViewController") as BMSListViewController
+            sideMenuController()?.setContentViewController(destViewController)
         default:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LSKProfileController") as UIViewController
             break
         }
-        sideMenuController()?.setContentViewController(destViewController)
+        
     }
     
     

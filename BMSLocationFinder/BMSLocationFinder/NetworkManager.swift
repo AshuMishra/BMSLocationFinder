@@ -1,5 +1,5 @@
 //
-//  NetworkManager.swift
+//  BMSNetworkManager.swift
 //  BMSLocationFinder
 //
 //  Created by Ashutosh on 03/04/2015.
@@ -15,25 +15,22 @@ let kAPIKey = "AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c"
 
 typealias LocationFetchCompletionBlock = (CLLocation) -> ()
 
-typealias RequestCompletionBlock = (dictionary: NSDictionary?, error: NSError?) -> ()
+typealias RequestCompletionBlock = (result: NSArray?, error: NSError?) -> ()
 
-//"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.577409,77.322391&radius=500&types=food&&key=AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c&sensor=true")
-
-
-class NetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate {
+class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate {
 
     var currentUserLocation : CLLocation?
     var locationManager :CLLocationManager?
 
     var locationFetchCompletionBlock : LocationFetchCompletionBlock?
-    class var sharedInstance: NetworkManager {
+    class var sharedInstance: BMSNetworkManager {
         struct Static {
-            static var instance: NetworkManager?
+            static var instance: BMSNetworkManager?
             static var token: dispatch_once_t = 0
         }
         
         dispatch_once(&Static.token) {
-            Static.instance = NetworkManager()
+            Static.instance = BMSNetworkManager()
         }
         
         return Static.instance!
@@ -74,11 +71,10 @@ class NetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate {
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
-        manager.stopUpdatingLocation()
-        self.currentUserLocation = newLocation
-        self.locationFetchCompletionBlock!(newLocation)
-        println("location fetched = \(self.currentUserLocation)")
-        
+            manager.stopUpdatingLocation()
+            self.currentUserLocation = newLocation
+            self.locationFetchCompletionBlock!(newLocation)
+            println("location fetched = \(self.currentUserLocation)")
     }
     func fetchLocation(completionBlock:LocationFetchCompletionBlock) {
         self.locationFetchCompletionBlock = completionBlock
@@ -89,21 +85,58 @@ class NetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate {
         var url = self.createURLWithParameter(radius: radius, type: type)
         var request1: NSURLRequest = NSURLRequest(URL: NSURL(string: url!)!)
         let queue:NSOperationQueue = NSOperationQueue()
+        var placeResult:NSMutableArray = NSMutableArray()
         NSURLConnection.sendAsynchronousRequest(request1, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
             var err: NSError
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-            println("AsSynchronous\(jsonResult)")
-            var places = jsonResult.objectForKey("results") as NSArray
-            for (var i = 0 ; i < places.count ; i++) {
-                println("place = \(places[i])")
-                var place = Place(dictionary: places[i] as NSDictionary)
-                println("place parsed= \(place)")
-
+            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+            
+            if ((error) != nil) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionBlock(result: nil,error: error)
+                })
+            }else {
+                println("AsSynchronous\(jsonResult)")
+                var places = jsonResult.objectForKey("results") as NSArray
+                for (var i = 0 ; i < places.count ; i++) {
+                    println("place = \(places[i])")
+                    var place = Place(dictionary: places[i] as NSDictionary)
+                    println("place parsed= \(place)")
+                    placeResult.addObject(place)
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionBlock(result: placeResult,error: nil)
+                })
 
             }
-        })
 
-        
+        })
+    }
+
+    func sendRequestForPhoto(photoReference:NSString) {
+        var url = self.createPhotoURLWithParameter(photoReference)
+        var request1: NSURLRequest = NSURLRequest(URL: NSURL(string: url!)!)
+        let queue:NSOperationQueue = NSOperationQueue()
+        NSURLConnection.sendAsynchronousRequest(request1, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData?, error: NSError?) -> Void in
+            var err: NSError
+            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+            println("photo\(jsonResult)")
+        })
+    }
+    
+    func createPhotoURLWithParameter(photoReference:NSString)-> NSString? {
+        var parameters:NSString
+        if (self.currentUserLocation != nil) {
+            var baseURL = "https://maps.googleapis.com/maps/api/place/photo?"
+            var maxwidth = NSString(format: "maxwidth=%d", 400)
+            var photoReference = NSString(format: "photoReference=%@", photoReference)
+            var apiParameter = NSString(format: "key=%@",kAPIKey)
+            
+            let URLString = baseURL + maxwidth + "&" + photoReference + "&" + apiParameter
+            println("url = \(URLString)")
+            return URLString;
+        }else {
+            return nil;
+        }
     }
 
     func createURLWithParameter(#radius:Float, type:NSString)-> NSString?{
@@ -124,5 +157,3 @@ class NetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate {
 }
 
 
-
-//Fetch 

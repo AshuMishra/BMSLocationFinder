@@ -9,12 +9,12 @@
 import Foundation
 
 class Place: NSObject {
-    var latitude:Float = 0.0
-    var longitude:Float = 0.0
-    var placeId:NSString = ""
-    var icon:NSString = ""
-    var placeName:NSString = ""
-    var photoReference:NSString = ""
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+    var placeId: NSString = ""
+    var iconUrl: NSString = ""
+    var placeName: NSString = ""
+    var photoReference: NSString = ""
     
     override init() {
         super.init()
@@ -22,12 +22,12 @@ class Place: NSObject {
     
     init(dictionary:NSDictionary) {
         var dict = dictionary.objectForKey("geometry")?.objectForKey("location") as NSDictionary
-        latitude = dict.objectForKey("lat") as Float
-        longitude = dict.objectForKey("lng") as Float
-        placeId = dictionary.objectForKey("place_id") as String
-        icon = dictionary.objectForKey("icon") as String
-        placeName = dictionary.objectForKey("name") as String
-        photoReference = dictionary.objectForKey("reference") as String
+        self.latitude = dict.objectForKey("lat")!.doubleValue
+        self.longitude = dict.objectForKey("lng")!.doubleValue
+        self.placeId = dictionary.objectForKey("place_id") as String
+        self.iconUrl = dictionary.objectForKey("icon") as String
+        self.placeName = dictionary.objectForKey("name") as String
+        self.photoReference = dictionary.objectForKey("reference") as String
     }
     
     
