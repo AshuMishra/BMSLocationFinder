@@ -144,20 +144,7 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
 
     func sendRequestForPhoto(photoReference:NSString,completionBlock:PhotoRequestCompletionBlock) {
         var url = self.createPhotoURLWithParameter(photoReference)
-        var request1: NSURLRequest = NSURLRequest(URL: NSURL(string: url!)!)
-        let queue:NSOperationQueue = NSOperationQueue()
-        NSURLConnection.sendAsynchronousRequest(request1, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData?, error: NSError?) -> Void in
-            if (error == nil) {
-                var image = UIImage(data: data!)
-                dispatch_async(dispatch_get_main_queue(), {
-                    completionBlock(image: image,error: nil)
-                })
-            }else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    completionBlock(image:nil,error: error)
-                })
-            }
-        })
+        ImageDownloader.sharedInstance.fetchImage(url!, completionBlock: completionBlock)
     }
     
     func createPhotoURLWithParameter(photoReference:NSString)-> NSString? {
