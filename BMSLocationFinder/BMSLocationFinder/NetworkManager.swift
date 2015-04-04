@@ -49,13 +49,6 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
             locationManager?.delegate = self
             locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         }
-      //        paginator.loadFirst ({(result, error, allPagesLoaded) -> () in
-//            println("sskdfdk")
-//            paginator.loadNext ({ (result, error, allPagesLoaded) -> () in
-//                println("sskdfdk")
-//                
-//            })
-//        })
     }
     
     func updatePlacePaginator(#radius:Float, type:NSString) {
@@ -99,48 +92,6 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
         self.locationFetchCompletionBlock = completionBlock
         self.updateLocation()
     }
-//    ttps://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.777700,77.355550&radius=5000.000000&types=food&key=AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c&sensor=true
-//    
-    func sendRequest(#radius:Float, type:NSString, completionBlock:RequestCompletionBlock) {
-//        var coordinate : CLLocationCoordinate2D = self.currentUserLocation!.coordinate
-//        var locationString = NSString(format: "%f,%f", coordinate.latitude,coordinate.longitude)
-//        var parameterDictionary = ["location":locationString,"radius":NSString(format: "%f",radius),"types":type]
-//        var paginator = Paginator(urlString: urlStruct.placeSearchURL, queryParameters: parameterDictionary)
-//        paginator.loadFirst ({(result, error, allPagesLoaded) -> () in
-//            println("sskdfdk")
-//            paginator.loadNext ({ (result, error, allPagesLoaded) -> () in
-//                println("sskdfdk")
-//                
-//            })
-//        })
-//        
-
-        var url = self.createURLWithParameter(radius: radius, type: type)
-        var request1: NSURLRequest = NSURLRequest(URL: NSURL(string: url!)!)
-        let queue:NSOperationQueue = NSOperationQueue()
-        var placeResult:NSMutableArray = NSMutableArray()
-        NSURLConnection.sendAsynchronousRequest(request1, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            var err: NSError
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-            
-            if ((error) != nil) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    completionBlock(result: nil,error: error)
-                })
-            }else {
-                var places = jsonResult.objectForKey("results") as NSArray
-                for (var i = 0 ; i < places.count ; i++) {
-                    var place = Place(dictionary: places[i] as NSDictionary)
-                    placeResult.addObject(place)
-                }
-                dispatch_async(dispatch_get_main_queue(), {
-                    completionBlock(result: placeResult,error: nil)
-                })
-
-            }
-
-        })
-    }
 
     func sendRequestForPhoto(photoReference:NSString,completionBlock:PhotoRequestCompletionBlock) {
         var url = self.createPhotoURLWithParameter(photoReference)
@@ -159,22 +110,6 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
             return URLString;
         }else {
             return nil;
-        }
-    }
-
-    func createURLWithParameter(#radius:Float, type:NSString)-> NSString?{
-        var parameters:NSString
-        if (self.currentUserLocation != nil) {
-            var coordinate : CLLocationCoordinate2D = self.currentUserLocation!.coordinate
-            var locationParameter = NSString(format: "location=%f,%f",coordinate.latitude,coordinate.longitude)
-            var radiusParameter = NSString(format: "radius=%f",radius)
-            var typeParameter = NSString(format: "types=%@", type)
-            var apiParameter = NSString(format: "key=%@",kAPIKey)
-            let URLString = kBaseURL + kNearbySearchURL + locationParameter + "&" + radiusParameter + "&" + typeParameter + "&" + apiParameter + "&" + "sensor=true"
-            println("url = \(URLString)")
-            return URLString
-        }else {
-            return nil
         }
     }
 }
