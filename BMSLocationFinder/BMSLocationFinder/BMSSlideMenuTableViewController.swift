@@ -133,7 +133,9 @@ class BMSSlideMenuTableViewController: UITableViewController {
             sideMenuController()?.setContentViewController(destViewController)
         case 7:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BMSListViewController") as BMSListViewController
+            destViewController.shouldShowFavorite = true
             sideMenuController()?.setContentViewController(destViewController)
+            
         default:
             break
         }

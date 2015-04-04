@@ -15,6 +15,7 @@ class Place: NSObject {
     var iconUrl: NSString = ""
     var placeName: NSString = ""
     var photoReference: NSString = ""
+    var isFavorite: Bool = false
     
     override init() {
         super.init()

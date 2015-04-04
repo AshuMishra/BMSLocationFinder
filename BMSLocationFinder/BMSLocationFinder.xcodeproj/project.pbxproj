@@ -29,6 +29,9 @@
 		848AC70D1ACE759400054FA3 /* SlideMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848AC70B1ACE759400054FA3 /* SlideMenuCell.xib */; };
 		84908F1C1ACF9A3100AC1A09 /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84908F1B1ACF9A3100AC1A09 /* Paginator.swift */; };
 		8496D4E81ACFD12300A347FA /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4E71ACFD12300A347FA /* ImageDownloader.swift */; };
+		8496D4F01ACFDF9500A347FA /* IJReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4EF1ACFDF9500A347FA /* IJReachability.swift */; };
+		8496D4F51ACFE38E00A347FA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4F41ACFE38E00A347FA /* CoreDataManager.swift */; };
+		8496D4FE1ACFED9400A347FA /* FavoritePlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4FD1ACFED9400A347FA /* FavoritePlace.m */; };
 		84AFBC851ACEF7DC0067394A /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC841ACEF7DC0067394A /* ListCell.swift */; };
 		84AFBC911ACF17F90067394A /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC881ACF17F90067394A /* FrameView.swift */; };
 		84AFBC921ACF17F90067394A /* HUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC891ACF17F90067394A /* HUDAssets.swift */; };
@@ -78,6 +81,11 @@
 		848AC70B1ACE759400054FA3 /* SlideMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlideMenuCell.xib; sourceTree = "<group>"; };
 		84908F1B1ACF9A3100AC1A09 /* Paginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
 		8496D4E71ACFD12300A347FA /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		8496D4EF1ACFDF9500A347FA /* IJReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IJReachability.swift; sourceTree = "<group>"; };
+		8496D4F41ACFE38E00A347FA /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		8496D4FC1ACFED9400A347FA /* FavoritePlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritePlace.h; sourceTree = "<group>"; };
+		8496D4FD1ACFED9400A347FA /* FavoritePlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritePlace.m; sourceTree = "<group>"; };
+		8496D4FF1ACFEDBD00A347FA /* BMSLocationFinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BMSLocationFinder-Bridging-Header.h"; sourceTree = "<group>"; };
 		84AFBC841ACEF7DC0067394A /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		84AFBC881ACF17F90067394A /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameView.swift; sourceTree = "<group>"; };
 		84AFBC891ACF17F90067394A /* HUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDAssets.swift; sourceTree = "<group>"; };
@@ -138,6 +146,7 @@
 				848AC7001ACE736F00054FA3 /* ENSideMenuNavigationController.swift */,
 				848AC6FE1ACE729900054FA3 /* ENSideMenu.swift */,
 				84AFBC991ACF182E0067394A /* BMSUtil.swift */,
+				8496D4EF1ACFDF9500A347FA /* IJReachability.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -205,7 +214,8 @@
 			isa = PBXGroup;
 			children = (
 				8445A2A01ACEBCDF00FF481C /* Place.swift */,
-				848AC6D11ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld */,
+				8496D4ED1ACFDA4500A347FA /* CoreData Files */,
+				8496D4F41ACFE38E00A347FA /* CoreDataManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -248,6 +258,17 @@
 				848AC7021ACE73B500054FA3 /* BMSNavigationController.swift */,
 			);
 			name = Navigation;
+			sourceTree = "<group>";
+		};
+		8496D4ED1ACFDA4500A347FA /* CoreData Files */ = {
+			isa = PBXGroup;
+			children = (
+				848AC6D11ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld */,
+				8496D4FC1ACFED9400A347FA /* FavoritePlace.h */,
+				8496D4FD1ACFED9400A347FA /* FavoritePlace.m */,
+				8496D4FF1ACFEDBD00A347FA /* BMSLocationFinder-Bridging-Header.h */,
+			);
+			name = "CoreData Files";
 			sourceTree = "<group>";
 		};
 		84AFBC871ACF17F90067394A /* PKHUD */ = {
@@ -376,6 +397,7 @@
 				84AFBC911ACF17F90067394A /* FrameView.swift in Sources */,
 				84AFBC981ACF17F90067394A /* WindowRootViewController.swift in Sources */,
 				84AFBC851ACEF7DC0067394A /* ListCell.swift in Sources */,
+				8496D4FE1ACFED9400A347FA /* FavoritePlace.m in Sources */,
 				848AC6D51ACE694500054FA3 /* ViewController.swift in Sources */,
 				848AC6D01ACE694500054FA3 /* AppDelegate.swift in Sources */,
 				84AFBC941ACF17F90067394A /* HUDController.swift in Sources */,
@@ -384,12 +406,14 @@
 				848AC6F51ACE6DFF00054FA3 /* BMSDetailViewController.swift in Sources */,
 				8445A29F1ACE9CDA00FF481C /* BMSConstant.swift in Sources */,
 				848AC7031ACE73B500054FA3 /* BMSNavigationController.swift in Sources */,
+				8496D4F51ACFE38E00A347FA /* CoreDataManager.swift in Sources */,
 				848AC6F31ACE6DE300054FA3 /* BMSListViewController.swift in Sources */,
 				848AC6D31ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld in Sources */,
 				84AFBC931ACF17F90067394A /* HUDContentView.swift in Sources */,
 				84AFBC921ACF17F90067394A /* HUDAssets.swift in Sources */,
 				84AFBC971ACF17F90067394A /* Window.swift in Sources */,
 				84AFBC9A1ACF182E0067394A /* BMSUtil.swift in Sources */,
+				8496D4F01ACFDF9500A347FA /* IJReachability.swift in Sources */,
 				848AC7091ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift in Sources */,
 				84908F1C1ACF9A3100AC1A09 /* Paginator.swift in Sources */,
 			);
@@ -516,10 +540,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BMSLocationFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BMSLocationFinder/BMSLocationFinder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -527,10 +554,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BMSLocationFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BMSLocationFinder/BMSLocationFinder-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Paginator: NSObject {
     var url: String
@@ -31,29 +32,37 @@ class Paginator: NSObject {
     
     func loadFirst(completionBlock:RequestCompletionBlock) {
  
-        self.reset()
-        var request: NSURLRequest = NSURLRequest(URL: NSURL(string: self.urlString())!)
-        let queue:NSOperationQueue = NSOperationQueue()
-        NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            var err: NSError
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-            
-            if ((error) != nil) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    completionBlock(result: nil, error: error, allPagesLoaded: false)
-                })
-            }else {
-                self.pageCount++
-                self.finalResult = jsonResult.objectForKey("results") as? NSMutableArray
-                if let latestValue = jsonResult["next_page_token"] as? String {
-                    self.nextPageToken = latestValue
+        var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
+        if checkInternetConnection {
+            self.reset()
+            var request: NSURLRequest = NSURLRequest(URL: NSURL(string: self.urlString())!)
+            let queue:NSOperationQueue = NSOperationQueue()
+            NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+                var err: NSError
+                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+                
+                if ((error) != nil) {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        completionBlock(result: nil, error: error, allPagesLoaded: false)
+                    })
+                }else {
+                    self.pageCount++
+                    self.finalResult = jsonResult.objectForKey("results") as? NSMutableArray
+                    if let latestValue = jsonResult["next_page_token"] as? String {
+                        self.nextPageToken = latestValue
+                    }
+                    var allPagesLoaded:Bool = self.nextPageToken == nil
+                    dispatch_async(dispatch_get_main_queue(), {
+                        completionBlock(result: self.finalResult,error: nil,allPagesLoaded: allPagesLoaded)
+                    })
                 }
-                var allPagesLoaded:Bool = self.nextPageToken == nil
-                dispatch_async(dispatch_get_main_queue(), {
-                    completionBlock(result: self.finalResult,error: nil,allPagesLoaded: allPagesLoaded)
-                })
-            }
-        })
+            })
+        }
+        else {
+            UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+            completionBlock(result: nil, error: nil, allPagesLoaded: false)
+        }
+        
     }
     
     func updateResult(result:NSArray) {

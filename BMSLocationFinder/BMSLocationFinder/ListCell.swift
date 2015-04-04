@@ -21,7 +21,7 @@ class ListCell: UITableViewCell {
     func configure(#placeObject:Place) {
         self.place = placeObject
         placeName.text = placeObject.placeName
-        distanceLabel.text = NSString(format: "%.2lf Km.", self.calculateDistance()/1000)
+        distanceLabel.text = NSString(format: "%.2lf Km.", BMSUtil().calculateDistance(place.latitude, longitude: place.longitude)/1000)
         self.loadAsynchronousImage()
         
     }
@@ -45,9 +45,9 @@ class ListCell: UITableViewCell {
         })
     }
     
-    func calculateDistance()-> Double  {
-        var currentLocation = BMSNetworkManager.sharedInstance.currentUserLocation
-        var placeLocation = CLLocation(latitude: place.latitude, longitude: place.longitude)
-        return  placeLocation.distanceFromLocation(currentLocation)
-    }
+//    func calculateDistance()-> Double  {
+//        var currentLocation = BMSNetworkManager.sharedInstance.currentUserLocation
+//        var placeLocation = CLLocation(latitude: place.latitude, longitude: place.longitude)
+//        return  placeLocation.distanceFromLocation(currentLocation)
+//    }
 }

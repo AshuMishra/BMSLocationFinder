@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class BMSUtil: NSObject {
     
@@ -17,6 +18,12 @@ class BMSUtil: NSObject {
     
     class func hideProgressHUD() {
         HUDController.sharedController.hide(animated: true)
+    }
+    
+    func calculateDistance(latitude: Double, longitude: Double)-> Double  {
+        var currentLocation = BMSNetworkManager.sharedInstance.currentUserLocation
+        var placeLocation = CLLocation(latitude: latitude, longitude:longitude)
+        return  placeLocation.distanceFromLocation(currentLocation)
     }
 
 }

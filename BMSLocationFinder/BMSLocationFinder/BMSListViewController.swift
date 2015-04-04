@@ -9,14 +9,18 @@
 import Foundation
 import UIKit
 import CoreLocation
+import CoreData
 
 class BMSListViewController: UIViewController, ENSideMenuDelegate {
     
     @IBOutlet weak var listTableView: UITableView!
+    
     var placesArray: NSMutableArray?
     var currentPlaceType: PlaceType = .Food
     var radius: Float = 5000
-    var shouldShowLoadMore:Bool = false
+    var shouldShowLoadMore: Bool = false
+    var shouldShowFavorite: Bool = false
+    
     var footerView: UIView?
     
     override func viewDidLoad() {
@@ -25,6 +29,41 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         listTableView.tableFooterView = UIView()// To hide cell layout while there is no cell
         self.initFooterView()
         
+        if (self.shouldShowFavorite) {
+            self.configureForFavorites()
+        }else {
+            self.configureForPlaceType()
+        }
+
+    }
+    
+    func configureForFavorites() {
+        self.fetchFavoritePlaces()
+    }
+    
+    func fetchFavoritePlaces() {
+        let fetchRequest = NSFetchRequest(entityName: "FavoritePlace")
+        if let fetchResults = CoreDataManager.sharedManager.managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [FavoritePlace] {
+            if (fetchResults.count == 0) {
+                println("show alert")
+            }else {
+            for i in 0...fetchResults.count-1 {
+                var favoritePlace = fetchResults[i] as FavoritePlace
+                var place = Place()
+                place.placeId = favoritePlace.placeId
+                place.placeName = favoritePlace.placeName
+                place.iconUrl = favoritePlace.placeImageUrl
+                place.photoReference = favoritePlace.placeImagePhotoReference
+                place.latitude = favoritePlace.placeLatitude.doubleValue
+                place.longitude = favoritePlace.placeLongitude.doubleValue
+                place.isFavorite = true
+                self.placesArray?.addObject(place)
+                }
+            }
+        }
+    }
+    
+    func configureForPlaceType() {
         self.sideMenuController()?.sideMenu?.delegate = self
         BMSUtil.showProressHUD()
         BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation) -> () in
@@ -36,10 +75,9 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
                 }
                 self.shouldShowLoadMore = !allPagesLoaded
                 self.listTableView.reloadData()
-                 BMSUtil.hideProgressHUD()
+                BMSUtil.hideProgressHUD()
             })
         })
-
     }
     
     func initFooterView() {
