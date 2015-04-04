@@ -27,7 +27,14 @@ class Place: NSObject {
         self.placeId = dictionary.objectForKey("place_id") as String
         self.iconUrl = dictionary.objectForKey("icon") as String
         self.placeName = dictionary.objectForKey("name") as String
-        self.photoReference = dictionary.objectForKey("reference") as String
+        
+        var tempArray: NSArray? =  dictionary.objectForKey("photos") as? NSArray
+        if tempArray != nil {
+            var tempPhotoDict: NSDictionary? = tempArray?.firstObject as? NSDictionary
+            self.photoReference = tempPhotoDict?.objectForKey("photo_reference") as String
+        }
+       
+        
     }
     
     

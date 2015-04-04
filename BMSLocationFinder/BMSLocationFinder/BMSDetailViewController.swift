@@ -10,9 +10,21 @@ import Foundation
 import UIKit
 
 class BMSDetailViewController: UIViewController {
+    var currentPlace:Place?
+    
+    @IBOutlet weak var placeImageView: UIImageView!
+    
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var placeNameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.placeNameLabel.text = self.currentPlace?.placeName
+//        self.distanceLabel.text = 
+        BMSNetworkManager.sharedInstance.sendRequestForPhoto(self.currentPlace!.photoReference, completionBlock: { (image, error) -> () in
+            self.placeImageView.image = image
+            
+        })
     }
     
     override func didReceiveMemoryWarning() {

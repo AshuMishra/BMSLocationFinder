@@ -13,28 +13,46 @@ import CoreLocation
 class BMSListViewController: UIViewController, ENSideMenuDelegate {
     
     @IBOutlet weak var listTableView: UITableView!
-    var placesArray: NSArray?
+    var placesArray: NSMutableArray?
     var currentPlaceType: PlaceType = .Food
     var radius: Float = 5000
+    var shouldShowLoadMore:Bool = false
+    var footerView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        placesArray = NSArray()
+        placesArray = NSMutableArray()
         listTableView.tableFooterView = UIView()// To hide cell layout while there is no cell
+        self.initFooterView()
         
-         self.sideMenuController()?.sideMenu?.delegate = self
+        self.sideMenuController()?.sideMenu?.delegate = self
         BMSUtil.showProressHUD()
         BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation) -> () in
-            BMSNetworkManager.sharedInstance.sendRequest(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType), completionBlock: { (resultArray: NSArray?, error) -> () in
-                println("dict = \(resultArray)")
-                self.placesArray = resultArray
+            BMSNetworkManager.sharedInstance.updatePlacePaginator(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType))
+            BMSNetworkManager.sharedInstance.placePaginator?.loadFirst({ (result, error, allPagesLoaded) -> () in
+                for (var i = 0 ; i < result?.count ; i++) {
+                    var place = Place(dictionary: result?[i] as NSDictionary)
+                    self.placesArray?.addObject(place)
+                }
+                self.shouldShowLoadMore = !allPagesLoaded
                 self.listTableView.reloadData()
-                BMSUtil.hideProgressHUD()
+                 BMSUtil.hideProgressHUD()
             })
         })
 
     }
     
+    func initFooterView() {
+        footerView = UIView(frame: CGRectMake(0.0, 0.0, 320.0, 60.0))
+        var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        activityIndicator.tag = 10
+        activityIndicator.frame = CGRectMake(130.0, 15.0, 30, 30.0)
+        activityIndicator.hidesWhenStopped = true
+        footerView?.addSubview(activityIndicator)
+        activityIndicator = nil
+    }
+    
+   
     func stringForPlaceType(placetype:PlaceType)-> NSString! {
         switch(placetype) {
         case PlaceType.Food: return "food"
@@ -91,50 +109,55 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         cell.separatorInset = UIEdgeInsetsMake(0.0, cell.frame.size.width, 0.0, cell.frame.size.width)
         cell.configure(placeObject: self.placesArray?.objectAtIndex(indexPath.row) as Place)
         
-        //To add addition height to row seprator
-//        var additionalSeparator: UIView = UIView(frame: CGRectMake(0,cell.frame.size.height-1,cell.frame.size.width,1))
-//        additionalSeparator.backgroundColor = UIColor(red: 234.0/255.0, green: 234.0/255.0, blue: 234.0/255.0, alpha: 1.0)
-//        cell.addSubview(additionalSeparator)
-        return cell
+         return cell
     }
-   
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        loadImagesForVisibleCell()
-//    }
+
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.row == self.placesArray!.count - 1 && self.shouldShowLoadMore) {
+        self.listTableView.tableFooterView = self.footerView
+        (self.footerView?.viewWithTag(10) as UIActivityIndicatorView).startAnimating()
+        BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
+            for (var i = 0 ; i < result?.count ; i++) {
+                var place = Place(dictionary: result?[i] as NSDictionary)
+                self.placesArray?.addObject(place)
+            }
+            self.shouldShowLoadMore = !allPagesLoaded
+            self.listTableView.reloadData()
+            BMSUtil.hideProgressHUD()
+        })
+        }else {
+            (self.footerView?.viewWithTag(10) as UIActivityIndicatorView).stopAnimating()
+            self.listTableView.tableFooterView = nil
+        }
+    }
+
 //    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        loadImagesForVisibleCell()
-//    }
-//    func loadImagesForVisibleCell(){
+//        var endOfTable: Bool = ((scrollView.contentOffset.y) >= CGFloat((self.placesArray?.count * 60) - scrollView.frame.size.height)); // Here 40 is row height
 //        
-//        var visibleCells = self.contactTableView.visibleCells() as [LSKContactsTableViewCell]
-//        
-//        for cell in visibleCells{
-//            var contactsDict: ProfileModalData!
-//            var indexPath =  self.contactTableView.indexPathForCell(cell)
-//            switch self.returnSelectedButtonIndex() {
-//            case 0: contactsDict = self.recentArray.objectAtIndex(indexPath!.row) as? ProfileModalData
-//            case 1: contactsDict = self.trustedUserArray.objectAtIndex(indexPath!.row) as? ProfileModalData
-//            case 2: contactsDict = self.contactsArray.objectAtIndex(indexPath!.row) as? ProfileModalData
-//            default: break
-//            }
-//            let imageURL: String = NSString(format: "%@%@", LSKProfileController.imagesURLStruct.imageURL, contactsDict?.imageURL as String)
-//            if countElements(imageURL)>0 {
-//                LSKUtil.imageDownloader(imageURL, {(data:NSData) -> Void in
-//                    var imgObj = UIImage(data: data)
-//                    if imgObj != nil {
-//                        cell.contactImageView.image = UIImage(data: data)
-//                    }
-//                    else {
-//                        cell.contactImageView.image = UIImage(contentsOfFile: NSString(format: "%@/%@", NSBundle.mainBundle().resourcePath!,"Contact_Male.png"))
-//                    }
-//                    
-//                })
-//            }
-//            else {
-//                cell.contactImageView.image = UIImage(contentsOfFile: NSString(format: "%@/%@", NSBundle.mainBundle().resourcePath!,"Contact_Male.png"))
-//            }
+//        if (self.hasMoreData && endOfTable && !self.isLoading && !scrollView.dragging && !scrollView.decelerating) {
+//            self.tableView.tableFooterView = footerView
+//            [(UIActivityIndicatorView *)[footerView viewWithTag:10] startAnimating];
 //        }
+//
 //    }
 
+    //MARK: Segue Method:-
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destinationController = segue.destinationViewController as BMSDetailViewController
+        var indexPath: NSIndexPath = self.listTableView.indexPathForSelectedRow()!
+        destinationController.currentPlace = self.placesArray?.objectAtIndex(indexPath.row) as? Place
+    }
+
+    @IBAction func handleNext(sender: AnyObject) {
+        BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
+            for (var i = 0 ; i < result?.count ; i++) {
+                var place = Place(dictionary: result?[i] as NSDictionary)
+                self.placesArray?.addObject(place)
+            }
+            self.listTableView.reloadData()
+            BMSUtil.hideProgressHUD()
+        })
+    }
 }
 

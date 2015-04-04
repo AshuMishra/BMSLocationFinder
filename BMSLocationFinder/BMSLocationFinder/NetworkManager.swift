@@ -10,17 +10,22 @@ import Foundation
 import CoreLocation
 import UIKit
 
-let kBaseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+let kBaseURL = "https://maps.googleapis.com/maps/api/place/"
+let kNearbySearchURL = "nearbysearch/json?"
+let kPhotoURL = "photo?"
 let kAPIKey = "AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c"
 
 typealias LocationFetchCompletionBlock = (CLLocation) -> ()
 
 typealias RequestCompletionBlock = (result: NSArray?, error: NSError?) -> ()
+typealias PhotoRequestCompletionBlock = (image:UIImage?, error: NSError?) -> ()
+
 
 class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate {
 
-    var currentUserLocation : CLLocation?
+    var currentUserLocation :CLLocation?
     var locationManager :CLLocationManager?
+    var placePaginator : Paginator?
 
     var locationFetchCompletionBlock : LocationFetchCompletionBlock?
     class var sharedInstance: BMSNetworkManager {
@@ -44,6 +49,20 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
             locationManager?.delegate = self
             locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         }
+      //        paginator.loadFirst ({(result, error, allPagesLoaded) -> () in
+//            println("sskdfdk")
+//            paginator.loadNext ({ (result, error, allPagesLoaded) -> () in
+//                println("sskdfdk")
+//                
+//            })
+//        })
+    }
+    
+    func updatePlacePaginator(#radius:Float, type:NSString) {
+        var coordinate : CLLocationCoordinate2D = self.currentUserLocation!.coordinate
+        var locationString = NSString(format: "%f,%f", coordinate.latitude,coordinate.longitude)
+        var parameterDictionary = ["location":locationString,"radius":NSString(format: "%f",radius),"types":type]
+        self.placePaginator = Paginator(urlString: urlStruct.placeSearchURL, queryParameters: parameterDictionary)
     }
     
     func updateLocation() {
@@ -80,8 +99,22 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
         self.locationFetchCompletionBlock = completionBlock
         self.updateLocation()
     }
-    
+//    ttps://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.777700,77.355550&radius=5000.000000&types=food&key=AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c&sensor=true
+//    
     func sendRequest(#radius:Float, type:NSString, completionBlock:RequestCompletionBlock) {
+//        var coordinate : CLLocationCoordinate2D = self.currentUserLocation!.coordinate
+//        var locationString = NSString(format: "%f,%f", coordinate.latitude,coordinate.longitude)
+//        var parameterDictionary = ["location":locationString,"radius":NSString(format: "%f",radius),"types":type]
+//        var paginator = Paginator(urlString: urlStruct.placeSearchURL, queryParameters: parameterDictionary)
+//        paginator.loadFirst ({(result, error, allPagesLoaded) -> () in
+//            println("sskdfdk")
+//            paginator.loadNext ({ (result, error, allPagesLoaded) -> () in
+//                println("sskdfdk")
+//                
+//            })
+//        })
+//        
+
         var url = self.createURLWithParameter(radius: radius, type: type)
         var request1: NSURLRequest = NSURLRequest(URL: NSURL(string: url!)!)
         let queue:NSOperationQueue = NSOperationQueue()
@@ -95,12 +128,9 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
                     completionBlock(result: nil,error: error)
                 })
             }else {
-                println("AsSynchronous\(jsonResult)")
                 var places = jsonResult.objectForKey("results") as NSArray
                 for (var i = 0 ; i < places.count ; i++) {
-                    println("place = \(places[i])")
                     var place = Place(dictionary: places[i] as NSDictionary)
-                    println("place parsed= \(place)")
                     placeResult.addObject(place)
                 }
                 dispatch_async(dispatch_get_main_queue(), {
@@ -112,26 +142,32 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
         })
     }
 
-    func sendRequestForPhoto(photoReference:NSString) {
+    func sendRequestForPhoto(photoReference:NSString,completionBlock:PhotoRequestCompletionBlock) {
         var url = self.createPhotoURLWithParameter(photoReference)
         var request1: NSURLRequest = NSURLRequest(URL: NSURL(string: url!)!)
         let queue:NSOperationQueue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(request1, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData?, error: NSError?) -> Void in
-            var err: NSError
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-            println("photo\(jsonResult)")
+            if (error == nil) {
+                var image = UIImage(data: data!)
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionBlock(image: image,error: nil)
+                })
+            }else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionBlock(image:nil,error: error)
+                })
+            }
         })
     }
     
     func createPhotoURLWithParameter(photoReference:NSString)-> NSString? {
         var parameters:NSString
         if (self.currentUserLocation != nil) {
-            var baseURL = "https://maps.googleapis.com/maps/api/place/photo?"
             var maxwidth = NSString(format: "maxwidth=%d", 400)
-            var photoReference = NSString(format: "photoReference=%@", photoReference)
+            var photoReference = NSString(format: "photoreference=%@", photoReference)
             var apiParameter = NSString(format: "key=%@",kAPIKey)
             
-            let URLString = baseURL + maxwidth + "&" + photoReference + "&" + apiParameter
+            let URLString = kBaseURL + kPhotoURL + maxwidth + "&" + photoReference + "&" + apiParameter
             println("url = \(URLString)")
             return URLString;
         }else {
@@ -147,7 +183,7 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
             var radiusParameter = NSString(format: "radius=%f",radius)
             var typeParameter = NSString(format: "types=%@", type)
             var apiParameter = NSString(format: "key=%@",kAPIKey)
-            let URLString = kBaseURL + locationParameter + "&" + radiusParameter + "&" + typeParameter + "&" + apiParameter + "&" + "sensor=true"
+            let URLString = kBaseURL + kNearbySearchURL + locationParameter + "&" + radiusParameter + "&" + typeParameter + "&" + apiParameter + "&" + "sensor=true"
             println("url = \(URLString)")
             return URLString
         }else {

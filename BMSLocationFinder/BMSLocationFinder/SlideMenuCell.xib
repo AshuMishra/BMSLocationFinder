@@ -13,16 +13,16 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bHV-xe-cAz" id="Fbm-WN-QFj">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="0.0" maxValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="IAI-DP-Gg4">
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="0.0" maxValue="50000" translatesAutoresizingMaskIntoConstraints="NO" id="IAI-DP-Gg4">
                         <rect key="frame" x="64" y="28" width="194" height="31"/>
                         <connections>
                             <action selector="sliderValueChanged:" destination="bHV-xe-cAz" eventType="valueChanged" id="6EP-UZ-9Gb"/>
                         </connections>
                     </slider>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cN6-eM-wUS">
-                        <rect key="frame" x="19" y="35" width="36" height="17"/>
+                        <rect key="frame" x="13" y="35" width="51" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="dxK-NH-obG"/>
+                            <constraint firstAttribute="width" constant="51" id="dxK-NH-obG"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -64,9 +64,9 @@
                     <constraint firstAttribute="centerY" secondItem="9Vb-HD-oey" secondAttribute="centerY" constant="-5.5" id="SN3-p4-WOd"/>
                     <constraint firstItem="vqr-88-djb" firstAttribute="top" secondItem="cN6-eM-wUS" secondAttribute="bottom" constant="-2" id="Y70-dC-ael"/>
                     <constraint firstAttribute="centerY" secondItem="cN6-eM-wUS" secondAttribute="centerY" constant="-5.5" id="Yc9-bS-yn9"/>
-                    <constraint firstItem="IAI-DP-Gg4" firstAttribute="leading" secondItem="cN6-eM-wUS" secondAttribute="trailing" constant="11" id="Ywa-yX-5lF"/>
-                    <constraint firstItem="cN6-eM-wUS" firstAttribute="centerX" secondItem="vqr-88-djb" secondAttribute="centerX" id="cTM-wf-bKB"/>
-                    <constraint firstItem="cN6-eM-wUS" firstAttribute="leading" secondItem="Fbm-WN-QFj" secondAttribute="leadingMargin" constant="11" id="g8e-aK-IXC"/>
+                    <constraint firstItem="IAI-DP-Gg4" firstAttribute="leading" secondItem="cN6-eM-wUS" secondAttribute="trailing" constant="2" id="Ywa-yX-5lF"/>
+                    <constraint firstItem="cN6-eM-wUS" firstAttribute="centerX" secondItem="vqr-88-djb" secondAttribute="centerX" constant="1.5" id="cTM-wf-bKB"/>
+                    <constraint firstItem="cN6-eM-wUS" firstAttribute="leading" secondItem="Fbm-WN-QFj" secondAttribute="leadingMargin" constant="5" id="g8e-aK-IXC"/>
                     <constraint firstItem="9Vb-HD-oey" firstAttribute="leading" secondItem="IAI-DP-Gg4" secondAttribute="trailing" constant="16.5" id="q6l-3y-ai4"/>
                 </constraints>
             </tableViewCellContentView>
@@ -74,7 +74,7 @@
                 <outlet property="chooseRadiusSlider" destination="IAI-DP-Gg4" id="r2v-th-PGA"/>
                 <outlet property="selectedRadiusLabel" destination="cN6-eM-wUS" id="1hJ-ob-vqn"/>
             </connections>
-            <point key="canvasLocation" x="316" y="-200"/>
+            <point key="canvasLocation" x="316" y="-200.5"/>
         </tableViewCell>
     </objects>
 </document>

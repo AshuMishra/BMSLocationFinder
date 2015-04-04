@@ -68,6 +68,7 @@
                                             <outlet property="distanceLabel" destination="BwE-cI-hHQ" id="SGJ-jr-ElF"/>
                                             <outlet property="placeImageView" destination="mYP-ko-NAI" id="c4u-IC-FJg"/>
                                             <outlet property="placeName" destination="g48-fD-QTf" id="SZp-C3-lGa"/>
+                                            <segue destination="DDc-lI-fq0" kind="show" identifier="DetailSegue" id="SGp-ED-zuS"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -91,17 +92,11 @@
                                 <action selector="popoverButtonPressed:" destination="BYZ-38-t0r" id="67J-5o-iJ2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="JUG-he-Vwk">
-                            <connections>
-                                <segue destination="DDc-lI-fq0" kind="show" id="GOe-d3-Rgu"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="listTableView" destination="CS0-Jt-CTZ" id="EoV-IN-lkn"/>
-                        <segue destination="DDc-lI-fq0" kind="show" identifier="detailSegue" id="qcZ-fl-4hY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -117,7 +112,7 @@
                         <viewControllerLayoutGuide type="bottom" id="bT2-TP-cez"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qkk-xe-e3s">
-                        <rect key="frame" x="0.0" y="94" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7c7-gR-lM8">
@@ -214,6 +209,11 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
+                    <connections>
+                        <outlet property="distanceLabel" destination="UZR-3s-wI6" id="Fxv-sk-fdM"/>
+                        <outlet property="placeImageView" destination="7c7-gR-lM8" id="yZg-ZB-9dK"/>
+                        <outlet property="placeNameLabel" destination="2hU-Kj-8Os" id="vdl-Tv-qcc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="THr-tq-YA3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -240,7 +240,4 @@
             <point key="canvasLocation" x="210" y="1005"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="qcZ-fl-4hY"/>
-    </inferredMetricsTieBreakers>
 </document>

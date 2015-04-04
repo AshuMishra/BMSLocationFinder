@@ -21,3 +21,11 @@ enum PlaceType: NSInteger {
 struct constantStruct {
     static let IS_OS_8_AND_ABOVE = (UIDevice.currentDevice().systemVersion as NSString).floatValue >= 8.0
 }
+
+struct urlStruct {
+    static let baseURL = "https://maps.googleapis.com/maps/api/place/"
+    static let placeSearchURL = "nearbysearch/json?"
+    static let photoFetchURL = "photo?"
+    static let APIKey = "AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c"
+
+}

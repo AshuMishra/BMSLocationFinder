@@ -27,6 +27,7 @@
 		848AC7091ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC7081ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift */; };
 		848AC70C1ACE759400054FA3 /* SlideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC70A1ACE759400054FA3 /* SlideMenuCell.swift */; };
 		848AC70D1ACE759400054FA3 /* SlideMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848AC70B1ACE759400054FA3 /* SlideMenuCell.xib */; };
+		84908F1C1ACF9A3100AC1A09 /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84908F1B1ACF9A3100AC1A09 /* Paginator.swift */; };
 		84AFBC851ACEF7DC0067394A /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC841ACEF7DC0067394A /* ListCell.swift */; };
 		84AFBC911ACF17F90067394A /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC881ACF17F90067394A /* FrameView.swift */; };
 		84AFBC921ACF17F90067394A /* HUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC891ACF17F90067394A /* HUDAssets.swift */; };
@@ -74,6 +75,7 @@
 		848AC7081ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSlideMenuTableViewController.swift; sourceTree = "<group>"; };
 		848AC70A1ACE759400054FA3 /* SlideMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuCell.swift; sourceTree = "<group>"; };
 		848AC70B1ACE759400054FA3 /* SlideMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlideMenuCell.xib; sourceTree = "<group>"; };
+		84908F1B1ACF9A3100AC1A09 /* Paginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
 		84AFBC841ACEF7DC0067394A /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		84AFBC881ACF17F90067394A /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameView.swift; sourceTree = "<group>"; };
 		84AFBC891ACF17F90067394A /* HUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDAssets.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				8445A2961ACE8D7000FF481C /* NetworkManager.swift */,
+				84908F1B1ACF9A3100AC1A09 /* Paginator.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				84AFBC971ACF17F90067394A /* Window.swift in Sources */,
 				84AFBC9A1ACF182E0067394A /* BMSUtil.swift in Sources */,
 				848AC7091ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift in Sources */,
+				84908F1C1ACF9A3100AC1A09 /* Paginator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +512,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BMSLocationFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -518,6 +523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BMSLocationFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
