@@ -23,12 +23,17 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     var refreshControl: UIRefreshControl!
     var footerView: UIView?
     
+    @IBOutlet weak var noResultMessageLabel: UILabel!
+ 
     @IBOutlet weak var noResultScreen: UIImageView!
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         placesArray = NSArray()
-        self.registerNotification()
         listTableView.tableFooterView = UIView()// To hide cell layout while there is no cell
         self.initFooterView()
         
@@ -53,16 +58,8 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
       self.configureForPlaceType()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        if (self.shouldShowFavorite) {
-            self.configureForFavorites()
-        }
-    }
-    
     func configureForFavorites() {
         self.placesArray = DataModel.sharedModel.fetchFavoritePlaces()
-        self.listTableView.reloadData()
         self.updateViews()
     }
     
@@ -82,6 +79,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     }
     
     func updateViews() {
+        self.noResultMessageLabel.text = self.shouldShowFavorite ? "No Favorites yet" : "Please increase the radius of search"
         if self.placesArray?.count == 0 {
             self.noResultScreen.hidden = false
             self.listTableView.hidden = true
@@ -198,27 +196,6 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         var sortedResults: NSArray = self.placesArray!.sortedArrayUsingDescriptors(NSArray(object: descriptor!))
         self.placesArray = sortedResults
     }
-    
-    func updatePlaceArrayWithFavoritePlaces(fetchResults:NSArray?) {
-        var newPlaceArray = NSMutableArray()
-        for i in 0...fetchResults!.count-1 {
-            var favoritePlace = fetchResults?[i] as FavoritePlace
-            var place = Place()
-            place.placeId = favoritePlace.placeId
-            place.placeName = favoritePlace.placeName
-            place.iconUrl = favoritePlace.placeImageUrl
-            place.photoReference = favoritePlace.placeImagePhotoReference
-            place.latitude = favoritePlace.placeLatitude.doubleValue
-            place.longitude = favoritePlace.placeLongitude.doubleValue
-            place.isFavorite = true
-            newPlaceArray.addObject(place)
-        }
-        self.placesArray = newPlaceArray
-        var descriptor: NSSortDescriptor? = NSSortDescriptor(key: "distance", ascending: true)
-        var sortedResults: NSArray = self.placesArray!.sortedArrayUsingDescriptors(NSArray(object: descriptor!))
-        self.placesArray = sortedResults
-    }
-    
 
     func registerNotification() {
         NSNotificationCenter.defaultCenter().addObserver(
@@ -231,6 +208,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     //MARK: Segue Method:-
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        self.registerNotification()
         var destinationController = segue.destinationViewController as BMSDetailViewController
         var indexPath: NSIndexPath = self.listTableView.indexPathForSelectedRow()!
         destinationController.currentPlace = self.placesArray?.objectAtIndex(indexPath.row) as? Place

@@ -153,6 +153,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="listTableView" destination="CS0-Jt-CTZ" id="EoV-IN-lkn"/>
+                        <outlet property="noResultMessageLabel" destination="j0B-7j-ZST" id="nx6-4G-vmg"/>
                         <outlet property="noResultScreen" destination="aT5-OP-e5B" id="BUD-LC-rO7"/>
                     </connections>
                 </viewController>
