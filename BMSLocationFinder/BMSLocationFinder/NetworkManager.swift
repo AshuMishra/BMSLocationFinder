@@ -102,7 +102,6 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
             var apiParameter = NSString(format: "key=%@",urlStruct.APIKey)
             
             let URLString = urlStruct.baseURL + urlStruct.photoFetchURL + maxwidth + "&" + photoReference + "&" + apiParameter
-            println("url = \(URLString)")
             return URLString;
         }else {
             return nil;

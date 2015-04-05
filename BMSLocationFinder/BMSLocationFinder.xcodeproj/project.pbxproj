@@ -45,6 +45,7 @@
 		84AFBC971ACF17F90067394A /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC8F1ACF17F90067394A /* Window.swift */; };
 		84AFBC981ACF17F90067394A /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC901ACF17F90067394A /* WindowRootViewController.swift */; };
 		84AFBC9A1ACF182E0067394A /* BMSUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC991ACF182E0067394A /* BMSUtil.swift */; };
+		84B119381AD18F0600CE1A73 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119371AD18F0600CE1A73 /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		84AFBC8F1ACF17F90067394A /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		84AFBC901ACF17F90067394A /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowRootViewController.swift; sourceTree = "<group>"; };
 		84AFBC991ACF182E0067394A /* BMSUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSUtil.swift; sourceTree = "<group>"; };
+		84B119371AD18F0600CE1A73 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 			children = (
 				8445A2A01ACEBCDF00FF481C /* Place.swift */,
 				8496D4ED1ACFDA4500A347FA /* CoreData Files */,
+				84B119371AD18F0600CE1A73 /* DataModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				848AC6F31ACE6DE300054FA3 /* BMSListViewController.swift in Sources */,
 				848AC6D31ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld in Sources */,
 				84AFBC931ACF17F90067394A /* HUDContentView.swift in Sources */,
+				84B119381AD18F0600CE1A73 /* DataModel.swift in Sources */,
 				84AFBC921ACF17F90067394A /* HUDAssets.swift in Sources */,
 				84AFBC971ACF17F90067394A /* Window.swift in Sources */,
 				84AFBC9A1ACF182E0067394A /* BMSUtil.swift in Sources */,

@@ -36,10 +36,18 @@ class Place: NSObject {
             var tempPhotoDict: NSDictionary? = tempArray?.firstObject as? NSDictionary
             self.photoReference = tempPhotoDict?.objectForKey("photo_reference") as String
         }
-       
-        
     }
     
+    init(favoritePlace:FavoritePlace) {
+        self.placeId = favoritePlace.placeId
+        self.placeName = favoritePlace.placeName
+        self.iconUrl = favoritePlace.placeImageUrl
+        self.photoReference = favoritePlace.placeImagePhotoReference
+        self.latitude = favoritePlace.placeLatitude.doubleValue
+        self.longitude = favoritePlace.placeLongitude.doubleValue
+        self.isFavorite = true
+        self.distance = BMSUtil().calculateDistance(self.latitude, longitude: self.longitude)
+    }
     
 }
 

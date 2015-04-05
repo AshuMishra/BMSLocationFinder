@@ -58,23 +58,12 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         if (self.shouldShowFavorite) {
             self.configureForFavorites()
         }
-//        self.updateViews()
     }
     
     func configureForFavorites() {
-        self.fetchFavoritePlaces()
+        self.placesArray = DataModel.sharedModel.fetchFavoritePlaces()
         self.listTableView.reloadData()
-    }
-    
-    func fetchFavoritePlaces() {
-        let fetchRequest = NSFetchRequest(entityName: "FavoritePlace")
-        if let fetchResults = CoreDataManager.sharedManager.managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [FavoritePlace] {
-            if (fetchResults.count == 0) {
-                println("show alert")
-            }else {
-                self.updatePlaceArrayWithFavoritePlaces(fetchResults)
-            }
-        }
+        self.updateViews()
     }
     
     func configureForPlaceType() {

@@ -33,7 +33,6 @@ class Paginator: NSObject {
         var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
         if checkInternetConnection {
             self.reset()
-            println("current url = \(self.urlString())")
 
             var request: NSURLRequest = NSURLRequest(URL: NSURL(string: self.urlString())!)
             let queue:NSOperationQueue = NSOperationQueue()
@@ -89,7 +88,7 @@ class Paginator: NSObject {
                     
                     if ((error) != nil) {
                         dispatch_async(dispatch_get_main_queue(), {
-                            completionBlock(result: nil, error: error, allPagesLoaded: false)
+                            completionBlock(result: self.finalResult, error: error, allPagesLoaded: false)
                         })
                     }else {
                         var allPagesLoaded:Bool = false
@@ -97,8 +96,6 @@ class Paginator: NSObject {
                         var fetchedResult = jsonResult.objectForKey("results") as? NSMutableArray
                         if (fetchedResult!.count > 0){
                             self.updateResult(fetchedResult!)
-                            
-                            println(jsonResult["next_page_token"])
                             var latestValue = jsonResult["next_page_token"] as? String
                             if (latestValue == nil) {
                                 allPagesLoaded = true
@@ -107,7 +104,6 @@ class Paginator: NSObject {
                             }
                             self.nextPageToken = latestValue
                         }
-                        println("next page should load = \(self.nextPageToken)")
                         dispatch_async(dispatch_get_main_queue(), {
                             completionBlock(result: self.finalResult,error: nil,allPagesLoaded: allPagesLoaded)
                         })
@@ -129,9 +125,7 @@ class Paginator: NSObject {
             var paramValue = value as String
             parameterString +=  paramKey + "=" + paramValue + "&"
         }
-        
         let URLString = urlStruct.baseURL + url + parameterString + "key=" + urlStruct.APIKey + "&" + "sensor=true"
-        println("paginator url = \(URLString)")
         return URLString
     }
     
