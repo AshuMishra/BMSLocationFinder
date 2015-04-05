@@ -43,4 +43,24 @@ class DataModel : NSObject {
         return sortedResults
     }
     
+    func addPlaceToFavorites(currentPlace:Place) {
+        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(currentPlace.placeId)
+        if (favoritePlace == nil) {
+            let favoritePlace = NSEntityDescription.insertNewObjectForEntityForName("FavoritePlace", inManagedObjectContext: CoreDataManager.sharedManager.managedObjectContext!) as FavoritePlace
+            favoritePlace.placeName = currentPlace.placeName
+            favoritePlace.placeId = currentPlace.placeId
+            favoritePlace.placeImageUrl = currentPlace.iconUrl
+            favoritePlace.placeLatitude = currentPlace.latitude
+            favoritePlace.placeLongitude = currentPlace.longitude
+            favoritePlace.placeImagePhotoReference = currentPlace.photoReference
+            CoreDataManager.sharedManager.saveContext()
+        }
+    }
+    
+    func removePlaceFromFavorites(currentPlace:Place) {
+        var favoritePlace = BMSUtil().fetchFavoritePlacesForId(currentPlace.placeId)
+        CoreDataManager.sharedManager.managedObjectContext?.deleteObject(favoritePlace!)
+        CoreDataManager.sharedManager.saveContext()
+    }
+    
 }

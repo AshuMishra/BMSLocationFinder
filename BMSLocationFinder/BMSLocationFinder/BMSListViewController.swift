@@ -42,16 +42,18 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
         self.refreshControl.addTarget(self, action: "refreshPlace:", forControlEvents: UIControlEvents.ValueChanged)
         self.listTableView.addSubview(refreshControl)
-       
+        self.configureTable()
+    }
+    
+    func configureTable() {
         if (!self.shouldShowFavorite) {
             self.navigationItem.title = self.stringForPlaceType(self.currentPlaceType).capitalizedString
             self.configureForPlaceType()
         }
         else {
-            self.configureForFavorites()
             self.navigationItem.title = "Favorites"
+            self.configureForFavorites()
         }
-       
     }
     
     func refreshPlace(sender:AnyObject) {
@@ -70,10 +72,11 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             BMSNetworkManager.sharedInstance.updatePlacePaginator(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType))
             BMSNetworkManager.sharedInstance.placePaginator?.loadFirst({ (result, error, allPagesLoaded) -> () in
                 self.updatePlacesArray(result)
-                self.shouldShowLoadMore = !allPagesLoaded
+                self.shouldShowLoadMore = true
                 self.updateViews()
                 BMSUtil.hideProgressHUD()
                 self.refreshControl.endRefreshing()
+        
             })
         })
     }
@@ -166,7 +169,6 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
             if checkInternetConnection {
                 BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
-                    println("result fetched = \(result?.count)")
                     self.updatePlacesArray(result)
                     self.shouldShowLoadMore = !allPagesLoaded
                     self.listTableView.reloadData()
@@ -200,7 +202,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     func registerNotification() {
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "updateViews",
+            selector: "configureTable",
             name: notificationStruct.didSetFavorite,
             object: nil)
     }

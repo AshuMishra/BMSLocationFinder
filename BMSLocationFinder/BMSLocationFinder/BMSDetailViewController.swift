@@ -72,35 +72,17 @@ class BMSDetailViewController: UIViewController {
     
     @IBAction func toggleFavorite(sender: AnyObject) {
         if ((self.currentPlace?.isFavorite) == false) {
-            self.addToFavorites()
+            DataModel.sharedModel.addPlaceToFavorites(self.currentPlace!)
             self.currentPlace?.isFavorite = true
             
         }else {
-            self.removeFromFavorites()
+            DataModel.sharedModel.removePlaceFromFavorites(self.currentPlace!)
             self.currentPlace?.isFavorite = false
         }
         self.updateFavoriteButton()
         NSNotificationCenter.defaultCenter().postNotificationName(notificationStruct.didSetFavorite, object: nil)
     }
     
-    func addToFavorites() {
-        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
-        if (favoritePlace == nil) {
-            let favoritePlace = NSEntityDescription.insertNewObjectForEntityForName("FavoritePlace", inManagedObjectContext: CoreDataManager.sharedManager.managedObjectContext!) as FavoritePlace
-            favoritePlace.placeName = self.currentPlace!.placeName
-            favoritePlace.placeId = self.currentPlace!.placeId
-            favoritePlace.placeImageUrl = self.currentPlace!.iconUrl
-            favoritePlace.placeLatitude = self.currentPlace!.latitude
-            favoritePlace.placeLongitude = self.currentPlace!.longitude
-            favoritePlace.placeImagePhotoReference = self.currentPlace!.photoReference
-            CoreDataManager.sharedManager.saveContext()
-        }
-    }
 
-    func removeFromFavorites() {
-        var favoritePlace = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
-        CoreDataManager.sharedManager.managedObjectContext?.deleteObject(favoritePlace!)
-        CoreDataManager.sharedManager.saveContext()
-    }
     
 }
