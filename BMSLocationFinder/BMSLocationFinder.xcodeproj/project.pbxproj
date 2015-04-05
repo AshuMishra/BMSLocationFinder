@@ -7,45 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8445A2971ACE8D7000FF481C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8445A2961ACE8D7000FF481C /* NetworkManager.swift */; };
 		8445A2991ACE9A4500FF481C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8445A2981ACE9A4500FF481C /* CoreLocation.framework */; };
 		8445A29B1ACE9A4C00FF481C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8445A29A1ACE9A4C00FF481C /* MapKit.framework */; };
-		8445A29F1ACE9CDA00FF481C /* BMSConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8445A29E1ACE9CDA00FF481C /* BMSConstant.swift */; };
-		8445A2A11ACEBCDF00FF481C /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8445A2A01ACEBCDF00FF481C /* Place.swift */; };
 		848AC6D01ACE694500054FA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC6CF1ACE694500054FA3 /* AppDelegate.swift */; };
-		848AC6D31ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 848AC6D11ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld */; };
-		848AC6D81ACE694500054FA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 848AC6D61ACE694500054FA3 /* Main.storyboard */; };
 		848AC6DA1ACE694500054FA3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848AC6D91ACE694500054FA3 /* Images.xcassets */; };
 		848AC6DD1ACE694500054FA3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848AC6DB1ACE694500054FA3 /* LaunchScreen.xib */; };
 		848AC6E91ACE694500054FA3 /* BMSLocationFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC6E81ACE694500054FA3 /* BMSLocationFinderTests.swift */; };
-		848AC6F31ACE6DE300054FA3 /* BMSListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC6F21ACE6DE300054FA3 /* BMSListViewController.swift */; };
-		848AC6F51ACE6DFF00054FA3 /* BMSDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC6F41ACE6DFF00054FA3 /* BMSDetailViewController.swift */; };
-		848AC6FF1ACE729900054FA3 /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC6FE1ACE729900054FA3 /* ENSideMenu.swift */; };
-		848AC7011ACE736F00054FA3 /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC7001ACE736F00054FA3 /* ENSideMenuNavigationController.swift */; };
-		848AC7031ACE73B500054FA3 /* BMSNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC7021ACE73B500054FA3 /* BMSNavigationController.swift */; };
-		848AC7091ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC7081ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift */; };
-		848AC70C1ACE759400054FA3 /* SlideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848AC70A1ACE759400054FA3 /* SlideMenuCell.swift */; };
-		848AC70D1ACE759400054FA3 /* SlideMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848AC70B1ACE759400054FA3 /* SlideMenuCell.xib */; };
-		84908F1C1ACF9A3100AC1A09 /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84908F1B1ACF9A3100AC1A09 /* Paginator.swift */; };
-		8496D4E81ACFD12300A347FA /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4E71ACFD12300A347FA /* ImageDownloader.swift */; };
-		8496D4F01ACFDF9500A347FA /* IJReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4EF1ACFDF9500A347FA /* IJReachability.swift */; };
-		8496D4F51ACFE38E00A347FA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4F41ACFE38E00A347FA /* CoreDataManager.swift */; };
-		8496D4FE1ACFED9400A347FA /* FavoritePlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 8496D4FD1ACFED9400A347FA /* FavoritePlace.m */; };
-		8496D5041AD00E9600A347FA /* favorite_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8496D5001AD00E9600A347FA /* favorite_selected.png */; };
-		8496D5051AD00E9600A347FA /* favorite_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8496D5021AD00E9600A347FA /* favorite_unselected.png */; };
-		84A8B58B1AD1692B00AAA2F5 /* Hamburger Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A8B5891AD1692B00AAA2F5 /* Hamburger Menu.png */; };
-		84A8B58F1AD170DC00AAA2F5 /* No Result.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A8B58D1AD170DC00AAA2F5 /* No Result.png */; };
-		84AFBC851ACEF7DC0067394A /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC841ACEF7DC0067394A /* ListCell.swift */; };
-		84AFBC911ACF17F90067394A /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC881ACF17F90067394A /* FrameView.swift */; };
-		84AFBC921ACF17F90067394A /* HUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC891ACF17F90067394A /* HUDAssets.swift */; };
-		84AFBC931ACF17F90067394A /* HUDContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC8A1ACF17F90067394A /* HUDContentView.swift */; };
-		84AFBC941ACF17F90067394A /* HUDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC8B1ACF17F90067394A /* HUDController.swift */; };
-		84AFBC951ACF17F90067394A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84AFBC8C1ACF17F90067394A /* Images.xcassets */; };
-		84AFBC961ACF17F90067394A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84AFBC8D1ACF17F90067394A /* Info.plist */; };
-		84AFBC971ACF17F90067394A /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC8F1ACF17F90067394A /* Window.swift */; };
-		84AFBC981ACF17F90067394A /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC901ACF17F90067394A /* WindowRootViewController.swift */; };
-		84AFBC9A1ACF182E0067394A /* BMSUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFBC991ACF182E0067394A /* BMSUtil.swift */; };
-		84B119381AD18F0600CE1A73 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119371AD18F0600CE1A73 /* DataModel.swift */; };
+		84B1193E1AD19EE700CE1A73 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119391AD19EE700CE1A73 /* CoreDataManager.swift */; };
+		84B1193F1AD19EE700CE1A73 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1193A1AD19EE700CE1A73 /* DataModel.swift */; };
+		84B119401AD19EE700CE1A73 /* FavoritePlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B1193C1AD19EE700CE1A73 /* FavoritePlace.m */; };
+		84B119411AD19EE700CE1A73 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1193D1AD19EE700CE1A73 /* Place.swift */; };
+		84B119481AD19F0C00CE1A73 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119451AD19F0C00CE1A73 /* ImageDownloader.swift */; };
+		84B119491AD19F0C00CE1A73 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119461AD19F0C00CE1A73 /* NetworkManager.swift */; };
+		84B1194A1AD19F0C00CE1A73 /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119471AD19F0C00CE1A73 /* Paginator.swift */; };
+		84B1194E1AD19F1F00CE1A73 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1194B1AD19F1F00CE1A73 /* ListCell.swift */; };
+		84B1194F1AD19F1F00CE1A73 /* SlideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1194C1AD19F1F00CE1A73 /* SlideMenuCell.swift */; };
+		84B119501AD19F1F00CE1A73 /* SlideMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B1194D1AD19F1F00CE1A73 /* SlideMenuCell.xib */; };
+		84B119551AD19F3800CE1A73 /* BMSDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119511AD19F3800CE1A73 /* BMSDetailViewController.swift */; };
+		84B119561AD19F3800CE1A73 /* BMSListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119521AD19F3800CE1A73 /* BMSListViewController.swift */; };
+		84B119571AD19F3800CE1A73 /* BMSNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119531AD19F3800CE1A73 /* BMSNavigationController.swift */; };
+		84B119581AD19F3800CE1A73 /* BMSSlideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119541AD19F3800CE1A73 /* BMSSlideMenuTableViewController.swift */; };
+		84B1195E1AD19F5900CE1A73 /* favorite_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B119591AD19F5900CE1A73 /* favorite_selected.png */; };
+		84B1195F1AD19F5900CE1A73 /* favorite_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B1195A1AD19F5900CE1A73 /* favorite_unselected.png */; };
+		84B119601AD19F5900CE1A73 /* Hamburger Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B1195B1AD19F5900CE1A73 /* Hamburger Menu.png */; };
+		84B119621AD19F5900CE1A73 /* No Result.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B1195D1AD19F5900CE1A73 /* No Result.png */; };
+		84B119641AD19F9F00CE1A73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B119631AD19F9F00CE1A73 /* Main.storyboard */; };
+		84B119721AD19FC500CE1A73 /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119651AD19FC500CE1A73 /* ENSideMenu.swift */; };
+		84B119731AD19FC500CE1A73 /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119661AD19FC500CE1A73 /* ENSideMenuNavigationController.swift */; };
+		84B119741AD19FC500CE1A73 /* IJReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119671AD19FC500CE1A73 /* IJReachability.swift */; };
+		84B119751AD19FC500CE1A73 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119691AD19FC500CE1A73 /* FrameView.swift */; };
+		84B119761AD19FC500CE1A73 /* HUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1196A1AD19FC500CE1A73 /* HUDAssets.swift */; };
+		84B119771AD19FC500CE1A73 /* HUDContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1196B1AD19FC500CE1A73 /* HUDContentView.swift */; };
+		84B119781AD19FC500CE1A73 /* HUDController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1196C1AD19FC500CE1A73 /* HUDController.swift */; };
+		84B119791AD19FC500CE1A73 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84B1196D1AD19FC500CE1A73 /* Images.xcassets */; };
+		84B1197A1AD19FC500CE1A73 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84B1196E1AD19FC500CE1A73 /* Info.plist */; };
+		84B1197B1AD19FC500CE1A73 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119701AD19FC500CE1A73 /* Window.swift */; };
+		84B1197C1AD19FC500CE1A73 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B119711AD19FC500CE1A73 /* WindowRootViewController.swift */; };
+		84B1197F1AD19FEA00CE1A73 /* BMSConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1197D1AD19FEA00CE1A73 /* BMSConstant.swift */; };
+		84B119801AD19FEA00CE1A73 /* BMSUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1197E1AD19FEA00CE1A73 /* BMSUtil.swift */; };
+		84B119831AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84B119811AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,52 +59,52 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8445A2961ACE8D7000FF481C /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8445A2981ACE9A4500FF481C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8445A29A1ACE9A4C00FF481C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		8445A29E1ACE9CDA00FF481C /* BMSConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSConstant.swift; sourceTree = "<group>"; };
-		8445A2A01ACEBCDF00FF481C /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		848AC6CA1ACE694500054FA3 /* BMSLocationFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BMSLocationFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848AC6CE1ACE694500054FA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		848AC6CF1ACE694500054FA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		848AC6D21ACE694500054FA3 /* BMSLocationFinder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BMSLocationFinder.xcdatamodel; sourceTree = "<group>"; };
-		848AC6D71ACE694500054FA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		848AC6D91ACE694500054FA3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		848AC6DC1ACE694500054FA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		848AC6E21ACE694500054FA3 /* BMSLocationFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BMSLocationFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		848AC6E71ACE694500054FA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		848AC6E81ACE694500054FA3 /* BMSLocationFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMSLocationFinderTests.swift; sourceTree = "<group>"; };
-		848AC6F21ACE6DE300054FA3 /* BMSListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSListViewController.swift; sourceTree = "<group>"; };
-		848AC6F41ACE6DFF00054FA3 /* BMSDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSDetailViewController.swift; sourceTree = "<group>"; };
-		848AC6FE1ACE729900054FA3 /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
-		848AC7001ACE736F00054FA3 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
-		848AC7021ACE73B500054FA3 /* BMSNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSNavigationController.swift; sourceTree = "<group>"; };
-		848AC7081ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSlideMenuTableViewController.swift; sourceTree = "<group>"; };
-		848AC70A1ACE759400054FA3 /* SlideMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuCell.swift; sourceTree = "<group>"; };
-		848AC70B1ACE759400054FA3 /* SlideMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlideMenuCell.xib; sourceTree = "<group>"; };
-		84908F1B1ACF9A3100AC1A09 /* Paginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
-		8496D4E71ACFD12300A347FA /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
-		8496D4EF1ACFDF9500A347FA /* IJReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IJReachability.swift; sourceTree = "<group>"; };
-		8496D4F41ACFE38E00A347FA /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		8496D4FC1ACFED9400A347FA /* FavoritePlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritePlace.h; sourceTree = "<group>"; };
-		8496D4FD1ACFED9400A347FA /* FavoritePlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritePlace.m; sourceTree = "<group>"; };
 		8496D4FF1ACFEDBD00A347FA /* BMSLocationFinder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BMSLocationFinder-Bridging-Header.h"; sourceTree = "<group>"; };
-		8496D5011AD00E9600A347FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = Base.lproj/favorite_selected.png; sourceTree = "<group>"; };
-		8496D5031AD00E9600A347FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = Base.lproj/favorite_unselected.png; sourceTree = "<group>"; };
-		84A8B58A1AD1692B00AAA2F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = "Base.lproj/Hamburger Menu.png"; sourceTree = "<group>"; };
-		84A8B58E1AD170DC00AAA2F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = "Base.lproj/No Result.png"; sourceTree = "<group>"; };
-		84AFBC841ACEF7DC0067394A /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		84AFBC881ACF17F90067394A /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameView.swift; sourceTree = "<group>"; };
-		84AFBC891ACF17F90067394A /* HUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDAssets.swift; sourceTree = "<group>"; };
-		84AFBC8A1ACF17F90067394A /* HUDContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDContentView.swift; sourceTree = "<group>"; };
-		84AFBC8B1ACF17F90067394A /* HUDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDController.swift; sourceTree = "<group>"; };
-		84AFBC8C1ACF17F90067394A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		84AFBC8D1ACF17F90067394A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84AFBC8E1ACF17F90067394A /* PKHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKHUD.h; sourceTree = "<group>"; };
-		84AFBC8F1ACF17F90067394A /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
-		84AFBC901ACF17F90067394A /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowRootViewController.swift; sourceTree = "<group>"; };
-		84AFBC991ACF182E0067394A /* BMSUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSUtil.swift; sourceTree = "<group>"; };
-		84B119371AD18F0600CE1A73 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		84B119391AD19EE700CE1A73 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = "Model Classes/CoreDataManager.swift"; sourceTree = "<group>"; };
+		84B1193A1AD19EE700CE1A73 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataModel.swift; path = "Model Classes/DataModel.swift"; sourceTree = "<group>"; };
+		84B1193B1AD19EE700CE1A73 /* FavoritePlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritePlace.h; path = "Model Classes/FavoritePlace.h"; sourceTree = "<group>"; };
+		84B1193C1AD19EE700CE1A73 /* FavoritePlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritePlace.m; path = "Model Classes/FavoritePlace.m"; sourceTree = "<group>"; };
+		84B1193D1AD19EE700CE1A73 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Place.swift; path = "Model Classes/Place.swift"; sourceTree = "<group>"; };
+		84B119451AD19F0C00CE1A73 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageDownloader.swift; path = "Network Handler/ImageDownloader.swift"; sourceTree = "<group>"; };
+		84B119461AD19F0C00CE1A73 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = "Network Handler/NetworkManager.swift"; sourceTree = "<group>"; };
+		84B119471AD19F0C00CE1A73 /* Paginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Paginator.swift; path = "Network Handler/Paginator.swift"; sourceTree = "<group>"; };
+		84B1194B1AD19F1F00CE1A73 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListCell.swift; path = "View Classes/ListCell.swift"; sourceTree = "<group>"; };
+		84B1194C1AD19F1F00CE1A73 /* SlideMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SlideMenuCell.swift; path = "View Classes/SlideMenuCell.swift"; sourceTree = "<group>"; };
+		84B1194D1AD19F1F00CE1A73 /* SlideMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SlideMenuCell.xib; path = "View Classes/SlideMenuCell.xib"; sourceTree = "<group>"; };
+		84B119511AD19F3800CE1A73 /* BMSDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BMSDetailViewController.swift; path = "Controller Classes/BMSDetailViewController.swift"; sourceTree = "<group>"; };
+		84B119521AD19F3800CE1A73 /* BMSListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BMSListViewController.swift; path = "Controller Classes/BMSListViewController.swift"; sourceTree = "<group>"; };
+		84B119531AD19F3800CE1A73 /* BMSNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BMSNavigationController.swift; path = "Controller Classes/BMSNavigationController.swift"; sourceTree = "<group>"; };
+		84B119541AD19F3800CE1A73 /* BMSSlideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BMSSlideMenuTableViewController.swift; path = "Controller Classes/BMSSlideMenuTableViewController.swift"; sourceTree = "<group>"; };
+		84B119591AD19F5900CE1A73 /* favorite_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = favorite_selected.png; path = images/favorite_selected.png; sourceTree = "<group>"; };
+		84B1195A1AD19F5900CE1A73 /* favorite_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = favorite_unselected.png; path = images/favorite_unselected.png; sourceTree = "<group>"; };
+		84B1195B1AD19F5900CE1A73 /* Hamburger Menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Hamburger Menu.png"; path = "images/Hamburger Menu.png"; sourceTree = "<group>"; };
+		84B1195D1AD19F5900CE1A73 /* No Result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "No Result.png"; path = "images/No Result.png"; sourceTree = "<group>"; };
+		84B119631AD19F9F00CE1A73 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		84B119651AD19FC500CE1A73 /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ENSideMenu.swift; path = Helper/ENSideMenu.swift; sourceTree = "<group>"; };
+		84B119661AD19FC500CE1A73 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ENSideMenuNavigationController.swift; path = Helper/ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
+		84B119671AD19FC500CE1A73 /* IJReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IJReachability.swift; path = Helper/IJReachability.swift; sourceTree = "<group>"; };
+		84B119691AD19FC500CE1A73 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameView.swift; sourceTree = "<group>"; };
+		84B1196A1AD19FC500CE1A73 /* HUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDAssets.swift; sourceTree = "<group>"; };
+		84B1196B1AD19FC500CE1A73 /* HUDContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDContentView.swift; sourceTree = "<group>"; };
+		84B1196C1AD19FC500CE1A73 /* HUDController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDController.swift; sourceTree = "<group>"; };
+		84B1196D1AD19FC500CE1A73 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		84B1196E1AD19FC500CE1A73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84B1196F1AD19FC500CE1A73 /* PKHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKHUD.h; sourceTree = "<group>"; };
+		84B119701AD19FC500CE1A73 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		84B119711AD19FC500CE1A73 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowRootViewController.swift; sourceTree = "<group>"; };
+		84B1197D1AD19FEA00CE1A73 /* BMSConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BMSConstant.swift; path = Utility/BMSConstant.swift; sourceTree = "<group>"; };
+		84B1197E1AD19FEA00CE1A73 /* BMSUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BMSUtil.swift; path = Utility/BMSUtil.swift; sourceTree = "<group>"; };
+		84B119821AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BMSLocationFinder.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,9 +130,9 @@
 		8445A2951ACE8D5D00FF481C /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				8445A2961ACE8D7000FF481C /* NetworkManager.swift */,
-				84908F1B1ACF9A3100AC1A09 /* Paginator.swift */,
-				8496D4E71ACFD12300A347FA /* ImageDownloader.swift */,
+				84B119451AD19F0C00CE1A73 /* ImageDownloader.swift */,
+				84B119461AD19F0C00CE1A73 /* NetworkManager.swift */,
+				84B119471AD19F0C00CE1A73 /* Paginator.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -149,11 +149,10 @@
 		8445A29D1ACE9CC000FF481C /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				84AFBC871ACF17F90067394A /* PKHUD */,
-				848AC7001ACE736F00054FA3 /* ENSideMenuNavigationController.swift */,
-				848AC6FE1ACE729900054FA3 /* ENSideMenu.swift */,
-				8496D4EF1ACFDF9500A347FA /* IJReachability.swift */,
-				84CAB5711AD014B5000C438B /* BMSUtility Classes */,
+				84B119651AD19FC500CE1A73 /* ENSideMenu.swift */,
+				84B119661AD19FC500CE1A73 /* ENSideMenuNavigationController.swift */,
+				84B119671AD19FC500CE1A73 /* IJReachability.swift */,
+				84B119681AD19FC500CE1A73 /* PKHUD */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -180,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				8445A29D1ACE9CC000FF481C /* Helper */,
+				84CAB5711AD014B5000C438B /* BMSUtility Classes */,
 				848AC6FA1ACE718000054FA3 /* Resources */,
 				848AC6F91ACE717800054FA3 /* Controller */,
 				848AC6F81ACE716800054FA3 /* Views */,
@@ -220,9 +220,12 @@
 		848AC6F71ACE715E00054FA3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8445A2A01ACEBCDF00FF481C /* Place.swift */,
+				84B119391AD19EE700CE1A73 /* CoreDataManager.swift */,
+				84B1193A1AD19EE700CE1A73 /* DataModel.swift */,
+				84B1193B1AD19EE700CE1A73 /* FavoritePlace.h */,
+				84B1193C1AD19EE700CE1A73 /* FavoritePlace.m */,
+				84B1193D1AD19EE700CE1A73 /* Place.swift */,
 				8496D4ED1ACFDA4500A347FA /* CoreData Files */,
-				84B119371AD18F0600CE1A73 /* DataModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -230,9 +233,9 @@
 		848AC6F81ACE716800054FA3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				848AC70A1ACE759400054FA3 /* SlideMenuCell.swift */,
-				848AC70B1ACE759400054FA3 /* SlideMenuCell.xib */,
-				84AFBC841ACEF7DC0067394A /* ListCell.swift */,
+				84B1194B1AD19F1F00CE1A73 /* ListCell.swift */,
+				84B1194C1AD19F1F00CE1A73 /* SlideMenuCell.swift */,
+				84B1194D1AD19F1F00CE1A73 /* SlideMenuCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -240,8 +243,8 @@
 		848AC6F91ACE717800054FA3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				848AC6F21ACE6DE300054FA3 /* BMSListViewController.swift */,
-				848AC6F41ACE6DFF00054FA3 /* BMSDetailViewController.swift */,
+				84B119511AD19F3800CE1A73 /* BMSDetailViewController.swift */,
+				84B119521AD19F3800CE1A73 /* BMSListViewController.swift */,
 				848AC6FB1ACE71EB00054FA3 /* Navigation */,
 			);
 			name = Controller;
@@ -252,7 +255,7 @@
 			children = (
 				848AC6CF1ACE694500054FA3 /* AppDelegate.swift */,
 				848AC6DB1ACE694500054FA3 /* LaunchScreen.xib */,
-				848AC6D61ACE694500054FA3 /* Main.storyboard */,
+				84B119631AD19F9F00CE1A73 /* Main.storyboard */,
 				8496D5061AD00E9C00A347FA /* Images */,
 			);
 			name = Resources;
@@ -261,8 +264,8 @@
 		848AC6FB1ACE71EB00054FA3 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				848AC7081ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift */,
-				848AC7021ACE73B500054FA3 /* BMSNavigationController.swift */,
+				84B119531AD19F3800CE1A73 /* BMSNavigationController.swift */,
+				84B119541AD19F3800CE1A73 /* BMSSlideMenuTableViewController.swift */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";
@@ -270,10 +273,7 @@
 		8496D4ED1ACFDA4500A347FA /* CoreData Files */ = {
 			isa = PBXGroup;
 			children = (
-				8496D4F41ACFE38E00A347FA /* CoreDataManager.swift */,
-				848AC6D11ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld */,
-				8496D4FC1ACFED9400A347FA /* FavoritePlace.h */,
-				8496D4FD1ACFED9400A347FA /* FavoritePlace.m */,
+				84B119811AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodeld */,
 				8496D4FF1ACFEDBD00A347FA /* BMSLocationFinder-Bridging-Header.h */,
 			);
 			name = "CoreData Files";
@@ -282,35 +282,36 @@
 		8496D5061AD00E9C00A347FA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				84A8B58D1AD170DC00AAA2F5 /* No Result.png */,
-				8496D5001AD00E9600A347FA /* favorite_selected.png */,
-				8496D5021AD00E9600A347FA /* favorite_unselected.png */,
-				84A8B5891AD1692B00AAA2F5 /* Hamburger Menu.png */,
+				84B119591AD19F5900CE1A73 /* favorite_selected.png */,
+				84B1195A1AD19F5900CE1A73 /* favorite_unselected.png */,
+				84B1195B1AD19F5900CE1A73 /* Hamburger Menu.png */,
+				84B1195D1AD19F5900CE1A73 /* No Result.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
 		};
-		84AFBC871ACF17F90067394A /* PKHUD */ = {
+		84B119681AD19FC500CE1A73 /* PKHUD */ = {
 			isa = PBXGroup;
 			children = (
-				84AFBC881ACF17F90067394A /* FrameView.swift */,
-				84AFBC891ACF17F90067394A /* HUDAssets.swift */,
-				84AFBC8A1ACF17F90067394A /* HUDContentView.swift */,
-				84AFBC8B1ACF17F90067394A /* HUDController.swift */,
-				84AFBC8C1ACF17F90067394A /* Images.xcassets */,
-				84AFBC8D1ACF17F90067394A /* Info.plist */,
-				84AFBC8E1ACF17F90067394A /* PKHUD.h */,
-				84AFBC8F1ACF17F90067394A /* Window.swift */,
-				84AFBC901ACF17F90067394A /* WindowRootViewController.swift */,
+				84B119691AD19FC500CE1A73 /* FrameView.swift */,
+				84B1196A1AD19FC500CE1A73 /* HUDAssets.swift */,
+				84B1196B1AD19FC500CE1A73 /* HUDContentView.swift */,
+				84B1196C1AD19FC500CE1A73 /* HUDController.swift */,
+				84B1196D1AD19FC500CE1A73 /* Images.xcassets */,
+				84B1196E1AD19FC500CE1A73 /* Info.plist */,
+				84B1196F1AD19FC500CE1A73 /* PKHUD.h */,
+				84B119701AD19FC500CE1A73 /* Window.swift */,
+				84B119711AD19FC500CE1A73 /* WindowRootViewController.swift */,
 			);
-			path = PKHUD;
+			name = PKHUD;
+			path = Helper/PKHUD;
 			sourceTree = "<group>";
 		};
 		84CAB5711AD014B5000C438B /* BMSUtility Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8445A29E1ACE9CDA00FF481C /* BMSConstant.swift */,
-				84AFBC991ACF182E0067394A /* BMSUtil.swift */,
+				84B1197D1AD19FEA00CE1A73 /* BMSConstant.swift */,
+				84B1197E1AD19FEA00CE1A73 /* BMSUtil.swift */,
 			);
 			name = "BMSUtility Classes";
 			sourceTree = "<group>";
@@ -395,15 +396,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				848AC70D1ACE759400054FA3 /* SlideMenuCell.xib in Resources */,
-				84AFBC951ACF17F90067394A /* Images.xcassets in Resources */,
-				84A8B58F1AD170DC00AAA2F5 /* No Result.png in Resources */,
-				84A8B58B1AD1692B00AAA2F5 /* Hamburger Menu.png in Resources */,
-				84AFBC961ACF17F90067394A /* Info.plist in Resources */,
-				848AC6D81ACE694500054FA3 /* Main.storyboard in Resources */,
+				84B119641AD19F9F00CE1A73 /* Main.storyboard in Resources */,
+				84B119601AD19F5900CE1A73 /* Hamburger Menu.png in Resources */,
+				84B119791AD19FC500CE1A73 /* Images.xcassets in Resources */,
+				84B1195E1AD19F5900CE1A73 /* favorite_selected.png in Resources */,
+				84B1195F1AD19F5900CE1A73 /* favorite_unselected.png in Resources */,
+				84B119501AD19F1F00CE1A73 /* SlideMenuCell.xib in Resources */,
+				84B1197A1AD19FC500CE1A73 /* Info.plist in Resources */,
 				848AC6DD1ACE694500054FA3 /* LaunchScreen.xib in Resources */,
-				8496D5051AD00E9600A347FA /* favorite_unselected.png in Resources */,
-				8496D5041AD00E9600A347FA /* favorite_selected.png in Resources */,
+				84B119621AD19F5900CE1A73 /* No Result.png in Resources */,
 				848AC6DA1ACE694500054FA3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,32 +423,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				848AC70C1ACE759400054FA3 /* SlideMenuCell.swift in Sources */,
-				8445A2A11ACEBCDF00FF481C /* Place.swift in Sources */,
-				848AC7011ACE736F00054FA3 /* ENSideMenuNavigationController.swift in Sources */,
-				8496D4E81ACFD12300A347FA /* ImageDownloader.swift in Sources */,
-				84AFBC911ACF17F90067394A /* FrameView.swift in Sources */,
-				84AFBC981ACF17F90067394A /* WindowRootViewController.swift in Sources */,
-				84AFBC851ACEF7DC0067394A /* ListCell.swift in Sources */,
-				8496D4FE1ACFED9400A347FA /* FavoritePlace.m in Sources */,
+				84B119801AD19FEA00CE1A73 /* BMSUtil.swift in Sources */,
+				84B1197B1AD19FC500CE1A73 /* Window.swift in Sources */,
+				84B1194F1AD19F1F00CE1A73 /* SlideMenuCell.swift in Sources */,
+				84B1194E1AD19F1F00CE1A73 /* ListCell.swift in Sources */,
+				84B1193E1AD19EE700CE1A73 /* CoreDataManager.swift in Sources */,
+				84B1197F1AD19FEA00CE1A73 /* BMSConstant.swift in Sources */,
+				84B119781AD19FC500CE1A73 /* HUDController.swift in Sources */,
+				84B119831AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodeld in Sources */,
+				84B119411AD19EE700CE1A73 /* Place.swift in Sources */,
+				84B119581AD19F3800CE1A73 /* BMSSlideMenuTableViewController.swift in Sources */,
 				848AC6D01ACE694500054FA3 /* AppDelegate.swift in Sources */,
-				84AFBC941ACF17F90067394A /* HUDController.swift in Sources */,
-				8445A2971ACE8D7000FF481C /* NetworkManager.swift in Sources */,
-				848AC6FF1ACE729900054FA3 /* ENSideMenu.swift in Sources */,
-				848AC6F51ACE6DFF00054FA3 /* BMSDetailViewController.swift in Sources */,
-				8445A29F1ACE9CDA00FF481C /* BMSConstant.swift in Sources */,
-				848AC7031ACE73B500054FA3 /* BMSNavigationController.swift in Sources */,
-				8496D4F51ACFE38E00A347FA /* CoreDataManager.swift in Sources */,
-				848AC6F31ACE6DE300054FA3 /* BMSListViewController.swift in Sources */,
-				848AC6D31ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld in Sources */,
-				84AFBC931ACF17F90067394A /* HUDContentView.swift in Sources */,
-				84B119381AD18F0600CE1A73 /* DataModel.swift in Sources */,
-				84AFBC921ACF17F90067394A /* HUDAssets.swift in Sources */,
-				84AFBC971ACF17F90067394A /* Window.swift in Sources */,
-				84AFBC9A1ACF182E0067394A /* BMSUtil.swift in Sources */,
-				8496D4F01ACFDF9500A347FA /* IJReachability.swift in Sources */,
-				848AC7091ACE74A300054FA3 /* BMSSlideMenuTableViewController.swift in Sources */,
-				84908F1C1ACF9A3100AC1A09 /* Paginator.swift in Sources */,
+				84B119721AD19FC500CE1A73 /* ENSideMenu.swift in Sources */,
+				84B1197C1AD19FC500CE1A73 /* WindowRootViewController.swift in Sources */,
+				84B119771AD19FC500CE1A73 /* HUDContentView.swift in Sources */,
+				84B119731AD19FC500CE1A73 /* ENSideMenuNavigationController.swift in Sources */,
+				84B1194A1AD19F0C00CE1A73 /* Paginator.swift in Sources */,
+				84B119571AD19F3800CE1A73 /* BMSNavigationController.swift in Sources */,
+				84B119551AD19F3800CE1A73 /* BMSDetailViewController.swift in Sources */,
+				84B119761AD19FC500CE1A73 /* HUDAssets.swift in Sources */,
+				84B119561AD19F3800CE1A73 /* BMSListViewController.swift in Sources */,
+				84B119741AD19FC500CE1A73 /* IJReachability.swift in Sources */,
+				84B119481AD19F0C00CE1A73 /* ImageDownloader.swift in Sources */,
+				84B119491AD19F0C00CE1A73 /* NetworkManager.swift in Sources */,
+				84B119401AD19EE700CE1A73 /* FavoritePlace.m in Sources */,
+				84B1193F1AD19EE700CE1A73 /* DataModel.swift in Sources */,
+				84B119751AD19FC500CE1A73 /* FrameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,52 +471,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		848AC6D61ACE694500054FA3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				848AC6D71ACE694500054FA3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		848AC6DB1ACE694500054FA3 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				848AC6DC1ACE694500054FA3 /* Base */,
 			);
 			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		8496D5001AD00E9600A347FA /* favorite_selected.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8496D5011AD00E9600A347FA /* Base */,
-			);
-			name = favorite_selected.png;
-			sourceTree = "<group>";
-		};
-		8496D5021AD00E9600A347FA /* favorite_unselected.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8496D5031AD00E9600A347FA /* Base */,
-			);
-			name = favorite_unselected.png;
-			sourceTree = "<group>";
-		};
-		84A8B5891AD1692B00AAA2F5 /* Hamburger Menu.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				84A8B58A1AD1692B00AAA2F5 /* Base */,
-			);
-			name = "Hamburger Menu.png";
-			sourceTree = "<group>";
-		};
-		84A8B58D1AD170DC00AAA2F5 /* No Result.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				84A8B58E1AD170DC00AAA2F5 /* Base */,
-			);
-			name = "No Result.png";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -696,13 +657,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		848AC6D11ACE694500054FA3 /* BMSLocationFinder.xcdatamodeld */ = {
+		84B119811AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				848AC6D21ACE694500054FA3 /* BMSLocationFinder.xcdatamodel */,
+				84B119821AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodel */,
 			);
-			currentVersion = 848AC6D21ACE694500054FA3 /* BMSLocationFinder.xcdatamodel */;
-			path = BMSLocationFinder.xcdatamodeld;
+			currentVersion = 84B119821AD1A07D00CE1A73 /* BMSLocationFinder.xcdatamodel */;
+			name = BMSLocationFinder.xcdatamodeld;
+			path = "Model Classes/BMSLocationFinder.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
