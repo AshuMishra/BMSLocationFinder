@@ -15,7 +15,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     
     @IBOutlet weak var listTableView: UITableView!
     
-    var placesArray: NSMutableArray?
+    var placesArray: NSArray?
     var currentPlaceType: PlaceType = .Food
     var radius: Int = 5000
     var shouldShowLoadMore: Bool = false
@@ -27,7 +27,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        placesArray = NSMutableArray()
+        placesArray = NSArray()
         self.registerNotification()
         listTableView.tableFooterView = UIView()// To hide cell layout while there is no cell
         self.initFooterView()
@@ -67,24 +67,12 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     }
     
     func fetchFavoritePlaces() {
-        self.placesArray?.removeAllObjects()
         let fetchRequest = NSFetchRequest(entityName: "FavoritePlace")
         if let fetchResults = CoreDataManager.sharedManager.managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [FavoritePlace] {
             if (fetchResults.count == 0) {
                 println("show alert")
             }else {
-            for i in 0...fetchResults.count-1 {
-                var favoritePlace = fetchResults[i] as FavoritePlace
-                var place = Place()
-                place.placeId = favoritePlace.placeId
-                place.placeName = favoritePlace.placeName
-                place.iconUrl = favoritePlace.placeImageUrl
-                place.photoReference = favoritePlace.placeImagePhotoReference
-                place.latitude = favoritePlace.placeLatitude.doubleValue
-                place.longitude = favoritePlace.placeLongitude.doubleValue
-                place.isFavorite = true
-                self.placesArray?.addObject(place)
-                }
+                self.updatePlaceArrayWithFavoritePlaces(fetchResults)
             }
         }
     }
@@ -95,12 +83,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation) -> () in
             BMSNetworkManager.sharedInstance.updatePlacePaginator(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType))
             BMSNetworkManager.sharedInstance.placePaginator?.loadFirst({ (result, error, allPagesLoaded) -> () in
-                self.placesArray?.removeAllObjects()
-                println(result)
-                for (var i = 0 ; i < result?.count ; i++) {
-                    var place = Place(dictionary: result?[i] as NSDictionary)
-                    self.placesArray?.addObject(place)
-                }
+                self.updatePlacesArray(result)
                 self.shouldShowLoadMore = !allPagesLoaded
                 self.updateViews()
                 BMSUtil.hideProgressHUD()
@@ -164,24 +147,6 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         //Toggle slide menu
         toggleSideMenuView()
     }
-    @IBAction func handleNext(sender: AnyObject) {
-        var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
-        if checkInternetConnection {
-            BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
-                for (var i = 0 ; i < result?.count ; i++) {
-                    var place = Place(dictionary: result?[i] as NSDictionary)
-                    self.placesArray?.addObject(place)
-                }
-                self.listTableView.reloadData()
-                BMSUtil.hideProgressHUD()
-            })
-        }
-        else {
-            UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
-        }
-        
-    }
-
     
     //MARK: UITableView Datasource and Delegate Methods:
     
@@ -214,10 +179,8 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
             if checkInternetConnection {
                 BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
-                    for (var i = 0 ; i < result?.count ; i++) {
-                        var place = Place(dictionary: result?[i] as NSDictionary)
-                        self.placesArray?.addObject(place)
-                    }
+                    println("result fetched = \(result?.count)")
+                    self.updatePlacesArray(result)
                     self.shouldShowLoadMore = !allPagesLoaded
                     self.listTableView.reloadData()
                     BMSUtil.hideProgressHUD()
@@ -233,6 +196,40 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             self.listTableView.tableFooterView = UIView()
         }
     }
+    
+    func updatePlacesArray(result:NSArray?) {
+        var newPlaceArray = NSMutableArray()
+        for (var i = 0 ; i < result?.count ; i++) {
+            var place = Place(dictionary: result?[i] as NSDictionary)
+            newPlaceArray.addObject(place)
+        }
+        self.placesArray = newPlaceArray
+ 
+        var descriptor: NSSortDescriptor? = NSSortDescriptor(key: "distance", ascending: true)
+        var sortedResults: NSArray = self.placesArray!.sortedArrayUsingDescriptors(NSArray(object: descriptor!))
+        self.placesArray = sortedResults
+    }
+    
+    func updatePlaceArrayWithFavoritePlaces(fetchResults:NSArray?) {
+        var newPlaceArray = NSMutableArray()
+        for i in 0...fetchResults!.count-1 {
+            var favoritePlace = fetchResults?[i] as FavoritePlace
+            var place = Place()
+            place.placeId = favoritePlace.placeId
+            place.placeName = favoritePlace.placeName
+            place.iconUrl = favoritePlace.placeImageUrl
+            place.photoReference = favoritePlace.placeImagePhotoReference
+            place.latitude = favoritePlace.placeLatitude.doubleValue
+            place.longitude = favoritePlace.placeLongitude.doubleValue
+            place.isFavorite = true
+            newPlaceArray.addObject(place)
+        }
+        self.placesArray = newPlaceArray
+        var descriptor: NSSortDescriptor? = NSSortDescriptor(key: "distance", ascending: true)
+        var sortedResults: NSArray = self.placesArray!.sortedArrayUsingDescriptors(NSArray(object: descriptor!))
+        self.placesArray = sortedResults
+    }
+    
 
     func registerNotification() {
         NSNotificationCenter.defaultCenter().addObserver(

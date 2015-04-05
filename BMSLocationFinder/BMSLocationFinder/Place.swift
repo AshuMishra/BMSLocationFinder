@@ -16,6 +16,7 @@ class Place: NSObject {
     var placeName: NSString = ""
     var photoReference: NSString = ""
     var isFavorite: Bool = false
+    var distance: Double = 0.0
     
     override init() {
         super.init()
@@ -28,6 +29,7 @@ class Place: NSObject {
         self.placeId = dictionary.objectForKey("place_id") as String
         self.iconUrl = dictionary.objectForKey("icon") as String
         self.placeName = dictionary.objectForKey("name") as String
+        self.distance = BMSUtil().calculateDistance(self.latitude, longitude: self.longitude)
         
         var tempArray: NSArray? =  dictionary.objectForKey("photos") as? NSArray
         if tempArray != nil {

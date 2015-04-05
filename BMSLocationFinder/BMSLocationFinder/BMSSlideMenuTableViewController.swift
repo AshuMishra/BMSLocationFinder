@@ -106,7 +106,7 @@ class BMSSlideMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        println("did select row: \(indexPath.row)")
+//        println("did select row: \(indexPath.row)")
         
         if indexPath.row != lastSelectedIndexPath?.row  && indexPath.row != 0 {
             if let lastSelectedIndexPath = lastSelectedIndexPath {

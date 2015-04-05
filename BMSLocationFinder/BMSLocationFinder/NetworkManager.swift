@@ -83,7 +83,6 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
             manager.stopUpdatingLocation()
             self.currentUserLocation = newLocation
             self.locationFetchCompletionBlock!(newLocation)
-            println("location fetched = \(self.currentUserLocation)")
     }
     func fetchLocation(completionBlock:LocationFetchCompletionBlock) {
         self.locationFetchCompletionBlock = completionBlock

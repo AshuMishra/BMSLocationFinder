@@ -22,8 +22,8 @@ class ListCell: UITableViewCell {
     func configure(#placeObject:Place) {
         self.place = placeObject
         placeName.text = placeObject.placeName
-        distanceLabel.text = NSString(format: "%.2lf Km.", BMSUtil().calculateDistance(place.latitude, longitude: place.longitude)/1000)
-        
+        distanceLabel.text = NSString(format: "%.2lf Km.", placeObject.distance/1000)
+
         var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(place!.placeId)
         var imageName =  (favoritePlace != nil) ? "favorite_selected.png" : "favorite_unselected.png"
         self.favoritePlaceImageView.image = UIImage(named: imageName)
