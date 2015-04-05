@@ -27,5 +27,8 @@ struct urlStruct {
     static let placeSearchURL = "nearbysearch/json?"
     static let photoFetchURL = "photo?"
     static let APIKey = "AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c"
+}
 
+struct notificationStruct {
+    static let didSetFavorite = "Did Set Favorite"
 }

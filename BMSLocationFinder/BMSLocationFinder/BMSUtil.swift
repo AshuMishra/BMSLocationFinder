@@ -25,5 +25,15 @@ class BMSUtil: NSObject {
         var placeLocation = CLLocation(latitude: latitude, longitude:longitude)
         return  placeLocation.distanceFromLocation(currentLocation)
     }
+    
+    func fetchFavoritePlacesForId(placeId: String)-> FavoritePlace? {
+        var favoritePlace: FavoritePlace?
+        let fetchRequest = NSFetchRequest(entityName: "FavoritePlace")
+        fetchRequest.predicate = NSPredicate(format: "SELF.placeId = %@",placeId)
+        if let fetchResults = CoreDataManager.sharedManager.managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [FavoritePlace] {
+            favoritePlace = fetchResults.first
+        }
+        return favoritePlace
+    }
 
 }

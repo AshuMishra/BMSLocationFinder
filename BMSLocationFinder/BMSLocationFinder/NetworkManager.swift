@@ -10,10 +10,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
-let kBaseURL = "https://maps.googleapis.com/maps/api/place/"
-let kNearbySearchURL = "nearbysearch/json?"
-let kPhotoURL = "photo?"
-let kAPIKey = "AIzaSyAs1tk8BpcNyDqMd3stybMXEyuika1G90c"
+
 
 typealias LocationFetchCompletionBlock = (CLLocation) -> ()
 
@@ -51,10 +48,10 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
         }
     }
     
-    func updatePlacePaginator(#radius:Float, type:NSString) {
+    func updatePlacePaginator(#radius:Int, type:NSString) {
         var coordinate : CLLocationCoordinate2D = self.currentUserLocation!.coordinate
         var locationString = NSString(format: "%f,%f", coordinate.latitude,coordinate.longitude)
-        var parameterDictionary = ["location":locationString,"radius":NSString(format: "%f",radius),"types":type]
+        var parameterDictionary = ["location":locationString,"radius":NSString(format: "%d",radius),"types":type]
         self.placePaginator = Paginator(urlString: urlStruct.placeSearchURL, queryParameters: parameterDictionary)
     }
     
@@ -103,9 +100,9 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
         if (self.currentUserLocation != nil) {
             var maxwidth = NSString(format: "maxwidth=%d", 400)
             var photoReference = NSString(format: "photoreference=%@", photoReference)
-            var apiParameter = NSString(format: "key=%@",kAPIKey)
+            var apiParameter = NSString(format: "key=%@",urlStruct.APIKey)
             
-            let URLString = kBaseURL + kPhotoURL + maxwidth + "&" + photoReference + "&" + apiParameter
+            let URLString = urlStruct.baseURL + urlStruct.photoFetchURL + maxwidth + "&" + photoReference + "&" + apiParameter
             println("url = \(URLString)")
             return URLString;
         }else {

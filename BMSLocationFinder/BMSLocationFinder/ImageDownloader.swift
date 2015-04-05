@@ -31,11 +31,15 @@ class ImageDownloader: NSObject {
     
     func fetchImage(urlString:NSString,completionBlock:ImageDownloadCompletionBlock) {
         var imageForURL:UIImage? = self.imageCache.objectForKey(urlString) as UIImage!
+       
         if (imageForURL != nil) {
             completionBlock(image: imageForURL,error: nil)
         }
         else {
-            var request: NSURLRequest = NSURLRequest(URL: NSURL(string: urlString)!)
+            var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
+            if checkInternetConnection {
+               
+                var request: NSURLRequest = NSURLRequest(URL: NSURL(string: urlString)!)
                 let queue:NSOperationQueue = NSOperationQueue()
                 NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData?, error: NSError?) -> Void in
                     if (error == nil) {
@@ -52,6 +56,12 @@ class ImageDownloader: NSObject {
                         })
                     }
                 })
+            }
+            else {
+                UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+                completionBlock(image: nil,error: nil)
+            }
+            
         }
     }
 }

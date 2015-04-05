@@ -11,6 +11,7 @@ import UIKit
 import CoreLocation
 import MapKit
 import CoreData
+import QuartzCore
 
 class BMSDetailViewController: UIViewController {
     var currentPlace:Place?
@@ -19,15 +20,22 @@ class BMSDetailViewController: UIViewController {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var placeNameLabel: UILabel!
     @IBOutlet weak var placeLocationMapView: MKMapView!
-    
     @IBOutlet weak var favoriteButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updateFavoriteButton()
         self.showLocationOnMap()
+        self.placeNameLabel.text = self.currentPlace?.placeName
         self.distanceLabel.text = NSString(format: "%.2lf Km.", BMSUtil().calculateDistance(self.currentPlace!.latitude, longitude: self.currentPlace!.longitude)/1000)
+        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
+        self.currentPlace?.isFavorite =  (favoritePlace != nil) ? true : false
+        
         BMSNetworkManager.sharedInstance.sendRequestForPhoto(self.currentPlace!.photoReference, completionBlock: { (image, error) -> () in
             self.placeImageView.image = image
+            self.placeImageView.layer.cornerRadius = self.placeImageView.frame.size.height/2;
+            self.placeImageView.layer.masksToBounds = true;
+            self.placeImageView.layer.borderWidth = 0;
             
         })
     }
@@ -56,9 +64,9 @@ class BMSDetailViewController: UIViewController {
     }
     
     func updateFavoriteButton() {
-        var favoritePlace: NSManagedObject? = self.fetchFavoritePlacesForId(self.currentPlace!.placeId)
-        var title =  (favoritePlace != nil) ? "Unfavorite" : "Favorite"
-        self.favoriteButton.setTitle(title, forState: UIControlState.Normal)
+        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
+        var imageName =  (favoritePlace != nil) ? "favorite_selected.png" : "favorite_unselected.png"
+        self.favoriteButton.setImage(UIImage(named: imageName), forState: .Normal)
 
     }
     
@@ -72,10 +80,11 @@ class BMSDetailViewController: UIViewController {
             self.currentPlace?.isFavorite = false
         }
         self.updateFavoriteButton()
+        NSNotificationCenter.defaultCenter().postNotificationName(notificationStruct.didSetFavorite, object: nil)
     }
     
     func addToFavorites() {
-        var favoritePlace: NSManagedObject? = self.fetchFavoritePlacesForId(self.currentPlace!.placeId)
+        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
         if (favoritePlace == nil) {
             let favoritePlace = NSEntityDescription.insertNewObjectForEntityForName("FavoritePlace", inManagedObjectContext: CoreDataManager.sharedManager.managedObjectContext!) as FavoritePlace
             favoritePlace.placeName = self.currentPlace!.placeName
@@ -87,20 +96,11 @@ class BMSDetailViewController: UIViewController {
             CoreDataManager.sharedManager.saveContext()
         }
     }
-    
-    func fetchFavoritePlacesForId(placeId: String)-> FavoritePlace? {
-        var favoritePlace: FavoritePlace?
-        let fetchRequest = NSFetchRequest(entityName: "FavoritePlace")
-        fetchRequest.predicate = NSPredicate(format: "SELF.placeId = %@",placeId)
-        if let fetchResults = CoreDataManager.sharedManager.managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [FavoritePlace] {
-            favoritePlace = fetchResults.first
-        }
-        return favoritePlace
-    }
 
     func removeFromFavorites() {
-        var favoritePlace = self.fetchFavoritePlacesForId(self.currentPlace!.placeId)
+        var favoritePlace = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
         CoreDataManager.sharedManager.managedObjectContext?.deleteObject(favoritePlace!)
         CoreDataManager.sharedManager.saveContext()
     }
+    
 }

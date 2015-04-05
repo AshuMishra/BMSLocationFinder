@@ -129,7 +129,7 @@ class BMSSlideMenuTableViewController: UITableViewController {
             destViewController.currentPlaceType = PlaceType(rawValue: indexPath.row)!
             var sliderIndexPath: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
             var cell: SlideMenuCell = tableView.cellForRowAtIndexPath(sliderIndexPath) as SlideMenuCell
-            destViewController.radius = cell.chooseRadiusSlider.value
+            destViewController.radius =  Int(cell.chooseRadiusSlider.value)
             sideMenuController()?.setContentViewController(destViewController)
         case 7:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BMSListViewController") as BMSListViewController

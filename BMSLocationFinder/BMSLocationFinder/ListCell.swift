@@ -15,6 +15,7 @@ class ListCell: UITableViewCell {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var placeImageView: UIImageView!
     @IBOutlet weak var placeName: UILabel!
+    @IBOutlet weak var favoritePlaceImageView: UIImageView!
     
     var place:Place!
     
@@ -22,6 +23,12 @@ class ListCell: UITableViewCell {
         self.place = placeObject
         placeName.text = placeObject.placeName
         distanceLabel.text = NSString(format: "%.2lf Km.", BMSUtil().calculateDistance(place.latitude, longitude: place.longitude)/1000)
+        
+        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(place!.placeId)
+        var imageName =  (favoritePlace != nil) ? "favorite_selected.png" : "favorite_unselected.png"
+        self.favoritePlaceImageView.image = UIImage(named: imageName)
+
+        
         self.loadAsynchronousImage()
         
     }
@@ -32,22 +39,25 @@ class ListCell: UITableViewCell {
         
         // Download an NSData representation of the image at the URL
         let request: NSURLRequest = NSURLRequest(URL: imgURL)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-            if error == nil {
-                // Store the image in to our cache
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.placeImageView.image = UIImage(data: data)
-                })
-            }
-            else {
-                println("Error: \(error.localizedDescription)")
-            }
-        })
+        var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
+        if checkInternetConnection {
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+                if error == nil {
+                    // Store the image in to our cache
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.placeImageView.image = UIImage(data: data)
+                    })
+                }
+                else {
+                    println("Error: \(error.localizedDescription)")
+                }
+            })
+        }
+//        else {
+//            UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+//        }
+
+       
     }
     
-//    func calculateDistance()-> Double  {
-//        var currentLocation = BMSNetworkManager.sharedInstance.currentUserLocation
-//        var placeLocation = CLLocation(latitude: place.latitude, longitude: place.longitude)
-//        return  placeLocation.distanceFromLocation(currentLocation)
-//    }
 }

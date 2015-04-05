@@ -17,31 +17,57 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     
     var placesArray: NSMutableArray?
     var currentPlaceType: PlaceType = .Food
-    var radius: Float = 5000
+    var radius: Int = 5000
     var shouldShowLoadMore: Bool = false
     var shouldShowFavorite: Bool = false
-    
+    var refreshControl: UIRefreshControl!
     var footerView: UIView?
+    
+    @IBOutlet weak var noResultScreen: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         placesArray = NSMutableArray()
+        self.registerNotification()
         listTableView.tableFooterView = UIView()// To hide cell layout while there is no cell
         self.initFooterView()
         
-        if (self.shouldShowFavorite) {
-            self.configureForFavorites()
-        }else {
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
+        self.refreshControl.addTarget(self, action: "refreshPlace:", forControlEvents: UIControlEvents.ValueChanged)
+        self.listTableView.addSubview(refreshControl)
+       
+        if (!self.shouldShowFavorite) {
+            self.navigationItem.title = self.stringForPlaceType(self.currentPlaceType).capitalizedString
             self.configureForPlaceType()
         }
-
+        else {
+            self.configureForFavorites()
+            self.navigationItem.title = "Favorites"
+        }
+       
+    }
+    
+    func refreshPlace(sender:AnyObject) {
+      self.configureForPlaceType()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if (self.shouldShowFavorite) {
+            self.configureForFavorites()
+        }
+//        self.updateViews()
     }
     
     func configureForFavorites() {
         self.fetchFavoritePlaces()
+        self.listTableView.reloadData()
     }
     
     func fetchFavoritePlaces() {
+        self.placesArray?.removeAllObjects()
         let fetchRequest = NSFetchRequest(entityName: "FavoritePlace")
         if let fetchResults = CoreDataManager.sharedManager.managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [FavoritePlace] {
             if (fetchResults.count == 0) {
@@ -69,25 +95,38 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation) -> () in
             BMSNetworkManager.sharedInstance.updatePlacePaginator(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType))
             BMSNetworkManager.sharedInstance.placePaginator?.loadFirst({ (result, error, allPagesLoaded) -> () in
+                self.placesArray?.removeAllObjects()
+                println(result)
                 for (var i = 0 ; i < result?.count ; i++) {
                     var place = Place(dictionary: result?[i] as NSDictionary)
                     self.placesArray?.addObject(place)
                 }
                 self.shouldShowLoadMore = !allPagesLoaded
-                self.listTableView.reloadData()
+                self.updateViews()
                 BMSUtil.hideProgressHUD()
+                self.refreshControl.endRefreshing()
             })
         })
+    }
+    
+    func updateViews() {
+        if self.placesArray?.count == 0 {
+            self.noResultScreen.hidden = false
+            self.listTableView.hidden = true
+        }else {
+            self.noResultScreen.hidden = true
+            self.listTableView.hidden = false
+            self.listTableView.reloadData()
+        }
     }
     
     func initFooterView() {
         footerView = UIView(frame: CGRectMake(0.0, 0.0, 320.0, 60.0))
         var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         activityIndicator.tag = 10
-        activityIndicator.frame = CGRectMake(130.0, 15.0, 30, 30.0)
+        activityIndicator.frame = CGRectMake(160, 15.0, 30, 30.0)
         activityIndicator.hidesWhenStopped = true
         footerView?.addSubview(activityIndicator)
-        activityIndicator = nil
     }
     
    
@@ -125,6 +164,24 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         //Toggle slide menu
         toggleSideMenuView()
     }
+    @IBAction func handleNext(sender: AnyObject) {
+        var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
+        if checkInternetConnection {
+            BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
+                for (var i = 0 ; i < result?.count ; i++) {
+                    var place = Place(dictionary: result?[i] as NSDictionary)
+                    self.placesArray?.addObject(place)
+                }
+                self.listTableView.reloadData()
+                BMSUtil.hideProgressHUD()
+            })
+        }
+        else {
+            UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+        }
+        
+    }
+
     
     //MARK: UITableView Datasource and Delegate Methods:
     
@@ -146,38 +203,44 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         cell.backgroundColor = UIColor.whiteColor()
         cell.separatorInset = UIEdgeInsetsMake(0.0, cell.frame.size.width, 0.0, cell.frame.size.width)
         cell.configure(placeObject: self.placesArray?.objectAtIndex(indexPath.row) as Place)
-        
-         return cell
+        return cell
     }
 
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         if (indexPath.row == self.placesArray!.count - 1 && self.shouldShowLoadMore) {
-        self.listTableView.tableFooterView = self.footerView
-        (self.footerView?.viewWithTag(10) as UIActivityIndicatorView).startAnimating()
-        BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
-            for (var i = 0 ; i < result?.count ; i++) {
-                var place = Place(dictionary: result?[i] as NSDictionary)
-                self.placesArray?.addObject(place)
+            self.listTableView.tableFooterView = self.footerView
+            (self.footerView?.viewWithTag(10) as UIActivityIndicatorView).startAnimating()
+            var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
+            if checkInternetConnection {
+                BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
+                    for (var i = 0 ; i < result?.count ; i++) {
+                        var place = Place(dictionary: result?[i] as NSDictionary)
+                        self.placesArray?.addObject(place)
+                    }
+                    self.shouldShowLoadMore = !allPagesLoaded
+                    self.listTableView.reloadData()
+                    BMSUtil.hideProgressHUD()
+                })
+                
             }
-            self.shouldShowLoadMore = !allPagesLoaded
-            self.listTableView.reloadData()
-            BMSUtil.hideProgressHUD()
-        })
+            else {
+                UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+            }
+            
         }else {
             (self.footerView?.viewWithTag(10) as UIActivityIndicatorView).stopAnimating()
-            self.listTableView.tableFooterView = nil
+            self.listTableView.tableFooterView = UIView()
         }
     }
 
-//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        var endOfTable: Bool = ((scrollView.contentOffset.y) >= CGFloat((self.placesArray?.count * 60) - scrollView.frame.size.height)); // Here 40 is row height
-//        
-//        if (self.hasMoreData && endOfTable && !self.isLoading && !scrollView.dragging && !scrollView.decelerating) {
-//            self.tableView.tableFooterView = footerView
-//            [(UIActivityIndicatorView *)[footerView viewWithTag:10] startAnimating];
-//        }
-//
-//    }
+    func registerNotification() {
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "updateViews",
+            name: notificationStruct.didSetFavorite,
+            object: nil)
+    }
 
     //MARK: Segue Method:-
     
@@ -185,17 +248,6 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         var destinationController = segue.destinationViewController as BMSDetailViewController
         var indexPath: NSIndexPath = self.listTableView.indexPathForSelectedRow()!
         destinationController.currentPlace = self.placesArray?.objectAtIndex(indexPath.row) as? Place
-    }
-
-    @IBAction func handleNext(sender: AnyObject) {
-        BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
-            for (var i = 0 ; i < result?.count ; i++) {
-                var place = Place(dictionary: result?[i] as NSDictionary)
-                self.placesArray?.addObject(place)
-            }
-            self.listTableView.reloadData()
-            BMSUtil.hideProgressHUD()
-        })
     }
 }
 
