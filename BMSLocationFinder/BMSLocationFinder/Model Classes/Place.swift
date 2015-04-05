@@ -23,6 +23,7 @@ class Place: NSObject {
     }
     
     init(dictionary:NSDictionary) {
+        //Initialize properties with dictionary values
         var dict = dictionary.objectForKey("geometry")?.objectForKey("location") as NSDictionary
         self.latitude = dict.objectForKey("lat")!.doubleValue
         self.longitude = dict.objectForKey("lng")!.doubleValue

@@ -13,7 +13,6 @@ import UIKit
 
 
 typealias LocationFetchCompletionBlock = (CLLocation?,error:NSError?) -> ()
-
 typealias RequestCompletionBlock = (result: NSArray?, error: NSError?) -> ()
 typealias PhotoRequestCompletionBlock = (image:UIImage?, error: NSError?) -> ()
 
@@ -24,6 +23,7 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
     var locationManager :CLLocationManager?
     var placePaginator : Paginator?
 
+    //Shared Instance
     var locationFetchCompletionBlock : LocationFetchCompletionBlock?
     class var sharedInstance: BMSNetworkManager {
         struct Static {
@@ -34,13 +34,13 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
         dispatch_once(&Static.token) {
             Static.instance = BMSNetworkManager()
         }
-        
         return Static.instance!
     }
     
 
     override init() {
         super.init()
+        //Initialize Location manager to update location
         if (locationManager == nil) {
             locationManager = CLLocationManager()
             locationManager?.delegate = self
@@ -49,6 +49,7 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
     }
     
     func updatePlacePaginator(#radius:Int, type:NSString) {
+        //To update your location and pass required parameter to load the page using Paginator class
         var coordinate : CLLocationCoordinate2D = self.currentUserLocation!.coordinate
         var locationString = NSString(format: "%f,%f", coordinate.latitude,coordinate.longitude)
         var parameterDictionary = ["location":locationString,"radius":NSString(format: "%d",radius),"types":type]
@@ -56,7 +57,7 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
     }
     
     func updateLocation() {
-        
+        //To check what method we use to update the location depending upon on ios version
         if (constantStruct.IS_OS_8_AND_ABOVE) {
             locationManager?.requestWhenInUseAuthorization()
         }
@@ -81,6 +82,7 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+        //This method is used to update the user location
             manager.stopUpdatingLocation()
             self.currentUserLocation = newLocation
             self.locationFetchCompletionBlock!(newLocation,error: nil)
@@ -92,11 +94,14 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
     }
 
     func sendRequestForPhoto(photoReference:NSString,completionBlock:PhotoRequestCompletionBlock) {
+        //Method is used for to download place image when seeing it's deatil
         var url = self.createPhotoURLWithParameter(photoReference)
         ImageDownloader.sharedInstance.fetchImage(url!, completionBlock: completionBlock)
     }
     
     func createPhotoURLWithParameter(photoReference:NSString)-> NSString? {
+        
+        //This method is used to make proper string to fetch place image.
         var parameters:NSString
         if (self.currentUserLocation != nil) {
             var maxwidth = NSString(format: "maxwidth=%d", 400)

@@ -20,15 +20,17 @@ class ListCell: UITableViewCell {
     var place:Place!
     
     func configure(#placeObject:Place) {
+        //Configure cell in ListView Controller
         self.place = placeObject
         placeName.text = placeObject.placeName
         distanceLabel.text = NSString(format: "%.2lf Km.", placeObject.distance/1000)
 
-        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(place!.placeId)
+        //To check Whether this place is favorite is not using it's loaction and apply image according to that.
+        var favoritePlace: NSManagedObject? = DataModel.sharedModel.fetchFavoritePlacesForId(place!.placeId)
         var imageName =  (favoritePlace != nil) ? "favorite_selected.png" : "favorite_unselected.png"
         self.favoritePlaceImageView.image = UIImage(named: imageName)
 
-        
+        //Load image asynchronously.
         self.loadAsynchronousImage()
         
     }
@@ -49,15 +51,11 @@ class ListCell: UITableViewCell {
                     })
                 }
                 else {
-                    println("Error: \(error.localizedDescription)")
+                    UIAlertView(title: "Error", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
                 }
             })
         }
-//        else {
-//            UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
-//        }
-
-       
+        
     }
     
 }

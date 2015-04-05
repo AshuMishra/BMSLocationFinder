@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class Paginator: NSObject {
+    
     var url: String
     var parameters: NSDictionary?
     private var finalResult: NSMutableArray?
@@ -29,24 +30,29 @@ class Paginator: NSObject {
     }
     
     func loadFirst(completionBlock:RequestCompletionBlock) {
- 
+        //Load the first page of search results
+
         var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
         if checkInternetConnection {
             self.reset()
+            
             var request: NSURLRequest = NSURLRequest(URL: NSURL(string: self.urlString())!)
             let queue:NSOperationQueue = NSOperationQueue()
+           
             NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                 var err: NSError
                 var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
                 
-                if ((error) != nil) {
+                if (error != nil) {
                     dispatch_async(dispatch_get_main_queue(), {
                         completionBlock(result: nil, error: error, allPagesLoaded: false)
                     })
-                }else {
+                }
+                else {
                     var fetchedResult = jsonResult.objectForKey("results") as? NSMutableArray
                     if (fetchedResult!.count > 0){
                         self.updateResult(fetchedResult!)
+                        //If next page is present in reponse then make service to load more data
                         if var latestValue = jsonResult["next_page_token"] as? String {
                             self.nextPageToken = latestValue
                         }
@@ -71,6 +77,7 @@ class Paginator: NSObject {
     }
     
     func loadNext(completionBlock:RequestCompletionBlock) {
+        //To load next page if results are more than 20
         if (self.nextPageToken == nil) {
             completionBlock(result: nil, error: nil, allPagesLoaded: true)
         }
@@ -85,7 +92,7 @@ class Paginator: NSObject {
                     var err: NSError
                     var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
                     
-                    if ((error) != nil) {
+                    if (error != nil) {
                         dispatch_async(dispatch_get_main_queue(), {
                             completionBlock(result: self.finalResult, error: error, allPagesLoaded: false)
                         })
@@ -117,6 +124,7 @@ class Paginator: NSObject {
     }
     
     func urlString()-> NSString {
+        //To make url string to load data from server
         var parameterString = ""
         var keys = self.parameters?.allKeys
         for (key, value) in self.parameters! {

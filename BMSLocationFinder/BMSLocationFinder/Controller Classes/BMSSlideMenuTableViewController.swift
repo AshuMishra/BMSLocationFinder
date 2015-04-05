@@ -24,12 +24,9 @@ class BMSSlideMenuTableViewController: UITableViewController {
         tableView.scrollEnabled = true
         lastSelectedIndexPath = NSIndexPath(forRow: 1, inSection: 0)
         
-//        var backGroundImageV = UIImageView(image: UIImage(contentsOfFile: NSString(format: "%@/%@", NSBundle.mainBundle().resourcePath!,"Hamburger.png")))
-//        backGroundImageV.frame = tableView.frame
-//        self.tableView.backgroundView = backGroundImageV
+        //To hide fake rows while loading plain UITableView
         tableView.tableFooterView = UIView()
-        
-        
+  
         // Preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         tableView.registerNib(UINib(nibName: "SlideMenuCell", bundle: nil), forCellReuseIdentifier: "Cell")
@@ -60,10 +57,10 @@ class BMSSlideMenuTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell?
+        //To load the cell according to it's position in view
         if indexPath.row == 0 {
             var cellObj: SlideMenuCell?
             cellObj = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as? SlideMenuCell
-            
             return cellObj!
         }
         else {
@@ -100,13 +97,13 @@ class BMSSlideMenuTableViewController: UITableViewController {
         if indexPath.row == 0 {
             return 75.0
         }
-        
         return 50.0
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        //Tp place the checkmark according to choosen cell.
         if indexPath.row != lastSelectedIndexPath?.row  && indexPath.row != 0 {
             if let lastSelectedIndexPath = lastSelectedIndexPath {
                 let oldCell = tableView.cellForRowAtIndexPath(lastSelectedIndexPath)

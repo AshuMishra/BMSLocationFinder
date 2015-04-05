@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//Enum to define place type
 enum PlaceType: NSInteger {
     case Food = 1
     case Gym
@@ -22,6 +23,7 @@ struct constantStruct {
     static let IS_OS_8_AND_ABOVE = (UIDevice.currentDevice().systemVersion as NSString).floatValue >= 8.0
 }
 
+//Application specific constant
 struct urlStruct {
     static let baseURL = "https://maps.googleapis.com/maps/api/place/"
     static let placeSearchURL = "nearbysearch/json?"

@@ -24,20 +24,17 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     var footerView: UIView?
     
     @IBOutlet weak var noResultMessageLabel: UILabel!
- 
     @IBOutlet weak var noResultScreen: UIImageView!
     
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-
+  //MARK: View LifeCycle Methods:-
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         placesArray = NSArray()
         listTableView.tableFooterView = UIView()// To hide cell layout while there is no cell
         self.initFooterView()
         
-        
+        //To add pull to refresh in tableview.
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
         self.refreshControl.addTarget(self, action: "refreshPlace:", forControlEvents: UIControlEvents.ValueChanged)
@@ -45,7 +42,13 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         self.configureTable()
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    //MARK: User defined methods:-
     func configureTable() {
+        // To check from where to show values in UITableView
         if (!self.shouldShowFavorite) {
             self.navigationItem.title = self.stringForPlaceType(self.currentPlaceType).capitalizedString
             self.configureForPlaceType()
@@ -57,10 +60,12 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     }
     
     func refreshPlace(sender:AnyObject) {
+        //Pull to refresh method
       self.configureForPlaceType()
     }
     
     func configureForFavorites() {
+        //To fetch data from favorites.
         self.placesArray = DataModel.sharedModel.fetchFavoritePlaces()
         self.updateViews()
     }
@@ -68,13 +73,16 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     func configureForPlaceType() {
         self.sideMenuController()?.sideMenu?.delegate = self
         var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
+       
         if checkInternetConnection {
             BMSUtil.showProressHUD()
             BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation?,error:NSError?) -> () in
                 if (error != nil) {
-                    UIAlertView(title: "Error", message: "Location could not be updated.", delegate: nil, cancelButtonTitle: "OK").show()
+                    UIAlertView(title: "Error", message: "Location could not be updated. Please check internet connection and settings and try again", delegate: nil, cancelButtonTitle: "OK").show()
                 }else {
+                    //To make url for downloading first page.
                     BMSNetworkManager.sharedInstance.updatePlacePaginator(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType))
+                    //To hit web service to get data
                     BMSNetworkManager.sharedInstance.placePaginator?.loadFirst({ (result, error, allPagesLoaded) -> () in
                         self.updatePlacesArray(result)
                         self.shouldShowLoadMore = true
@@ -87,6 +95,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             })
         }
         else {
+            //To hide refresh control
             self.refreshControl.endRefreshing()
             self.shouldShowLoadMore = true
             UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
@@ -95,7 +104,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     }
     
     func updateViews() {
-        self.noResultMessageLabel.text = self.shouldShowFavorite ? "No Favorites yet" : "Please increase the radius of search"
+        self.noResultMessageLabel.text = self.shouldShowFavorite ? "No Favorites yet." : "Please increase the radius of search."
         if self.placesArray?.count == 0 {
             self.noResultScreen.hidden = false
             self.listTableView.hidden = true
@@ -107,6 +116,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     }
     
     func initFooterView() {
+        //Make custom footer view to indicate load more data
         footerView = UIView(frame: CGRectMake(0.0, 0.0, 320.0, 60.0))
         var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         activityIndicator.tag = 10
@@ -170,6 +180,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier("listCell", forIndexPath: indexPath) as ListCell
         cell.backgroundColor = UIColor.whiteColor()
         cell.separatorInset = UIEdgeInsetsMake(0.0, cell.frame.size.width, 0.0, cell.frame.size.width)
+        //Configure cell to show data
         cell.configure(placeObject: self.placesArray?.objectAtIndex(indexPath.row) as Place)
         return cell
     }
@@ -179,6 +190,8 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         if (indexPath.row == self.placesArray!.count - 1 && self.shouldShowLoadMore) {
             self.listTableView.tableFooterView = self.footerView
             (self.footerView?.viewWithTag(10) as UIActivityIndicatorView).startAnimating()
+            
+            //To load more data if exists
             var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
             if checkInternetConnection {
                 BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
@@ -206,13 +219,13 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             newPlaceArray.addObject(place)
         }
         self.placesArray = newPlaceArray
- 
-        var descriptor: NSSortDescriptor? = NSSortDescriptor(key: "distance", ascending: true)
+        var descriptor: NSSortDescriptor? = NSSortDescriptor(key: "distance", ascending: true)//Sort the array according to it's distance
         var sortedResults: NSArray = self.placesArray!.sortedArrayUsingDescriptors(NSArray(object: descriptor!))
         self.placesArray = sortedResults
     }
 
     func registerNotification() {
+        //Register notification to load the table with new data
         NSNotificationCenter.defaultCenter().addObserver(
             self,
             selector: "configureTable",

@@ -32,6 +32,7 @@ class SlideMenuCell: UITableViewCell {
     }
 
     @IBAction func sliderValueChanged(sender: AnyObject) {
+        //To make the label updated as you choose the value from slider
         self.selectedRadiusLabel.text = NSString(format: "%d", Int( self.chooseRadiusSlider.value))
     }
 }

@@ -68,9 +68,6 @@ public class IJReachability {
         }
         
         return .NotConnected
-        //let needsConnection = (flags & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
-        
-        //return (isReachable && !needsConnection) ? true : false
     }
     
 }

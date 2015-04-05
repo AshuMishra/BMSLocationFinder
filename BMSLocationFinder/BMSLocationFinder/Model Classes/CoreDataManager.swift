@@ -11,16 +11,15 @@ import CoreData
 
 class CoreDataManager : NSObject {
     
+    //Shared Instance
     class var sharedManager: CoreDataManager {
         struct Static {
             static var instance: CoreDataManager?
             static var token: dispatch_once_t = 0
         }
-        
         dispatch_once(&Static.token) {
             Static.instance = CoreDataManager()
         }
-        
         return Static.instance!
     }
     // MARK: - Core Data stack

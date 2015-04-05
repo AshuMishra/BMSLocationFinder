@@ -24,13 +24,15 @@ class BMSDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Update favorite button in Deatil view
         self.updateFavoriteButton()
+        
+        //Show place location on map
         self.showLocationOnMap()
         self.placeNameLabel.text = self.currentPlace?.placeName
         self.distanceLabel.text = NSString(format: "%.2lf Km.", BMSUtil().calculateDistance(self.currentPlace!.latitude, longitude: self.currentPlace!.longitude)/1000)
-        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
-        self.currentPlace?.isFavorite =  (favoritePlace != nil) ? true : false
         
+        //To load place photo as mentioned in doc
         BMSNetworkManager.sharedInstance.sendRequestForPhoto(self.currentPlace!.photoReference, completionBlock: { (image, error) -> () in
             self.placeImageView.image = image
             self.placeImageView.layer.cornerRadius = self.placeImageView.frame.size.height/2;
@@ -51,11 +53,13 @@ class BMSDetailViewController: UIViewController {
         var latDelta:CLLocationDegrees = 0.50
         var longDelta:CLLocationDegrees = 0.50
         
+        //To set region to show on map
         var theSpan:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
         var pointLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(self.currentPlace!.latitude, self.currentPlace!.longitude)
         var region:MKCoordinateRegion = MKCoordinateRegionMake(pointLocation, theSpan)
         self.placeLocationMapView.setRegion(region, animated: true)
         
+        //Show annotation on map
         var pinLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake(self.currentPlace!.latitude, self.currentPlace!.longitude)
         var objectAnnotation = MKPointAnnotation()
         objectAnnotation.coordinate = pinLocation
@@ -64,13 +68,14 @@ class BMSDetailViewController: UIViewController {
     }
     
     func updateFavoriteButton() {
-        var favoritePlace: NSManagedObject? = BMSUtil().fetchFavoritePlacesForId(self.currentPlace!.placeId)
+        //To update the favorite button according to favorite.
+        var favoritePlace: NSManagedObject? = DataModel.sharedModel.fetchFavoritePlacesForId(self.currentPlace!.placeId)
         var imageName =  (favoritePlace != nil) ? "favorite_selected.png" : "favorite_unselected.png"
         self.favoriteButton.setImage(UIImage(named: imageName), forState: .Normal)
-
     }
     
     @IBAction func toggleFavorite(sender: AnyObject) {
+        //To select and deselect the favorite
         if ((self.currentPlace?.isFavorite) == false) {
             DataModel.sharedModel.addPlaceToFavorites(self.currentPlace!)
             self.currentPlace?.isFavorite = true
