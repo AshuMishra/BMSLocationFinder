@@ -12,7 +12,7 @@ import UIKit
 
 
 
-typealias LocationFetchCompletionBlock = (CLLocation) -> ()
+typealias LocationFetchCompletionBlock = (CLLocation?,error:NSError?) -> ()
 
 typealias RequestCompletionBlock = (result: NSArray?, error: NSError?) -> ()
 typealias PhotoRequestCompletionBlock = (image:UIImage?, error: NSError?) -> ()
@@ -76,14 +76,16 @@ class BMSNetworkManager : NSObject,CLLocationManagerDelegate,UIAlertViewDelegate
     // MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        
+        self.locationFetchCompletionBlock!(nil,error: error)
+
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
             manager.stopUpdatingLocation()
             self.currentUserLocation = newLocation
-            self.locationFetchCompletionBlock!(newLocation)
+            self.locationFetchCompletionBlock!(newLocation,error: nil)
     }
+    
     func fetchLocation(completionBlock:LocationFetchCompletionBlock) {
         self.locationFetchCompletionBlock = completionBlock
         self.updateLocation()

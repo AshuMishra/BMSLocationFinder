@@ -33,7 +33,6 @@ class Paginator: NSObject {
         var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
         if checkInternetConnection {
             self.reset()
-
             var request: NSURLRequest = NSURLRequest(URL: NSURL(string: self.urlString())!)
             let queue:NSOperationQueue = NSOperationQueue()
             NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in

@@ -67,18 +67,31 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     
     func configureForPlaceType() {
         self.sideMenuController()?.sideMenu?.delegate = self
-        BMSUtil.showProressHUD()
-        BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation) -> () in
-            BMSNetworkManager.sharedInstance.updatePlacePaginator(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType))
-            BMSNetworkManager.sharedInstance.placePaginator?.loadFirst({ (result, error, allPagesLoaded) -> () in
-                self.updatePlacesArray(result)
-                self.shouldShowLoadMore = true
-                self.updateViews()
-                BMSUtil.hideProgressHUD()
-                self.refreshControl.endRefreshing()
-        
+        var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
+        if checkInternetConnection {
+            BMSUtil.showProressHUD()
+            BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation?,error:NSError?) -> () in
+                if (error != nil) {
+                    UIAlertView(title: "Error", message: "Location could not be updated.", delegate: nil, cancelButtonTitle: "OK").show()
+                }else {
+                    BMSNetworkManager.sharedInstance.updatePlacePaginator(radius: self.radius, type: self.stringForPlaceType(self.currentPlaceType))
+                    BMSNetworkManager.sharedInstance.placePaginator?.loadFirst({ (result, error, allPagesLoaded) -> () in
+                        self.updatePlacesArray(result)
+                        self.shouldShowLoadMore = true
+                        self.updateViews()
+                        BMSUtil.hideProgressHUD()
+                        self.refreshControl.endRefreshing()
+                        
+                    })
+                }
             })
-        })
+        }
+        else {
+            self.refreshControl.endRefreshing()
+            self.shouldShowLoadMore = true
+            UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+        }
+        
     }
     
     func updateViews() {
