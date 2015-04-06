@@ -40,6 +40,9 @@ class BMSDetailViewController: UIViewController {
             self.placeImageView.layer.borderWidth = 0;
             
         })
+        
+        var favoritePlace: NSManagedObject? = DataModel.sharedModel.fetchFavoritePlacesForId(self.currentPlace!.placeId)
+        self.currentPlace?.isFavorite =  (favoritePlace != nil) ? true : false
     }
     
     override func didReceiveMemoryWarning() {
@@ -75,7 +78,8 @@ class BMSDetailViewController: UIViewController {
     }
     
     @IBAction func toggleFavorite(sender: AnyObject) {
-        //To select and deselect the favorite
+        
+              //To select and deselect the favorite
         if ((self.currentPlace?.isFavorite) == false) {
             DataModel.sharedModel.addPlaceToFavorites(self.currentPlace!)
             self.currentPlace?.isFavorite = true
