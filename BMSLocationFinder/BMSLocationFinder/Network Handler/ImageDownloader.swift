@@ -30,7 +30,7 @@ class ImageDownloader: NSObject {
     
     func fetchImage(urlString:NSString,completionBlock:ImageDownloadCompletionBlock) {
         var imageForURL:UIImage? = self.imageCache.objectForKey(urlString) as UIImage!
-       
+        
         //To check from where we have to pick the image- Server, Cache?
         if (imageForURL != nil) {
             completionBlock(image: imageForURL,error: nil)
@@ -40,7 +40,7 @@ class ImageDownloader: NSObject {
             
             if checkInternetConnection {
                 //To download Image Asynchronously from server
-                var request: NSURLRequest = NSURLRequest(URL: NSURL(string: urlString)!)
+                var request: NSURLRequest = NSURLRequest(URL: NSURL(string: urlString as String)!)
                 let queue:NSOperationQueue = NSOperationQueue()
                 NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData?, error: NSError?) -> Void in
                     if (error == nil) {

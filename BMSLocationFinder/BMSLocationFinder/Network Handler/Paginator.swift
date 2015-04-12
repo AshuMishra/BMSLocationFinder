@@ -16,6 +16,8 @@ class Paginator: NSObject {
     private var finalResult: NSMutableArray?
     var pageCount = 0
     var nextPageToken: NSString?
+    var isCallInProgress:Bool = false
+    var allPagesLoaded:Bool = false
     
     typealias RequestCompletionBlock = (result: NSArray?, error: NSError?,allPagesLoaded:Bool) -> ()
     
@@ -29,46 +31,55 @@ class Paginator: NSObject {
         self.finalResult = []
     }
     
+    func shouldLoadNext()-> Bool {
+        return !(allPagesLoaded && isCallInProgress)
+    }
+    
     func loadFirst(completionBlock:RequestCompletionBlock) {
         //Load the first page of search results
-
+        
         var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
         if checkInternetConnection {
             self.reset()
             
             var request: NSURLRequest = NSURLRequest(URL: NSURL(string: self.urlString())!)
             let queue:NSOperationQueue = NSOperationQueue()
-           
+            
             NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                 var err: NSError
                 var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
                 
                 if (error != nil) {
+                    self.isCallInProgress = false
                     dispatch_async(dispatch_get_main_queue(), {
                         completionBlock(result: nil, error: error, allPagesLoaded: false)
                     })
                 }
                 else {
-                    var fetchedResult = jsonResult.objectForKey("results") as? NSMutableArray
-                    if (fetchedResult!.count > 0){
-                        self.updateResult(fetchedResult!)
-                        //If next page is present in reponse then make service to load more data
-                        if var latestValue = jsonResult["next_page_token"] as? String {
-                            self.nextPageToken = latestValue
-                        }
+                    self.processJSONResult(jsonResult)
+                    if(self.isInvalidRequest(jsonResult)) {
+                        println("Invalid request")
+                        println("url string = \(self.urlString())")
+                        println("jsonResult = \(jsonResult)")
+                        return
                     }
-                    var allPagesLoaded:Bool = self.nextPageToken == nil
+                    self.isCallInProgress = false
+                    
                     dispatch_async(dispatch_get_main_queue(), {
-                        completionBlock(result: self.finalResult,error: nil,allPagesLoaded: allPagesLoaded)
+                        completionBlock(result: self.finalResult,error: nil,allPagesLoaded: self.allPagesLoaded)
                     })
                 }
             })
         }
         else {
-            UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+            self.showNetworkError()
             completionBlock(result: nil, error: nil, allPagesLoaded: false)
         }
         
+    }
+    
+    func showNetworkError() {
+        UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
     }
     
     func updateResult(result:NSArray) {
@@ -77,9 +88,10 @@ class Paginator: NSObject {
     }
     
     func loadNext(completionBlock:RequestCompletionBlock) {
+        if (self.isCallInProgress) {return}
         //To load next page if results are more than 20
         if (self.nextPageToken == nil) {
-            completionBlock(result: nil, error: nil, allPagesLoaded: true)
+            completionBlock(result: self.finalResult, error: nil, allPagesLoaded: true)
         }
         else {
             var nextURLString = NSString(format: "%@&pagetoken=%@", self.urlString(),self.nextPageToken!)
@@ -88,39 +100,59 @@ class Paginator: NSObject {
             
             var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
             if checkInternetConnection {
+                self.isCallInProgress = true
                 NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                     var err: NSError
                     var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
                     
                     if (error != nil) {
+                        self.isCallInProgress = false
+                        
                         dispatch_async(dispatch_get_main_queue(), {
                             completionBlock(result: self.finalResult, error: error, allPagesLoaded: false)
                         })
                     }else {
-                        var allPagesLoaded:Bool = false
-
-                        var fetchedResult = jsonResult.objectForKey("results") as? NSMutableArray
-                        if (fetchedResult!.count > 0){
-                            self.updateResult(fetchedResult!)
-                            var latestValue = jsonResult["next_page_token"] as? String
-                            if (latestValue == nil) {
-                                allPagesLoaded = true
-                            }else {
-                                allPagesLoaded = false
-                            }
-                            self.nextPageToken = latestValue
+                        self.processJSONResult(jsonResult)
+                        if(self.isInvalidRequest(jsonResult)) {
+                            println("Invalid request")
+                            println("url string = \(nextURLString)")
+                            println("jsonResult = \(jsonResult)")
+                            return
                         }
+                        self.isCallInProgress = false
                         dispatch_async(dispatch_get_main_queue(), {
-                            completionBlock(result: self.finalResult,error: nil,allPagesLoaded: allPagesLoaded)
+                            completionBlock(result: self.finalResult,error: nil,allPagesLoaded: self.allPagesLoaded)
                         })
                     }
                 })
             }
             else {
-                UIAlertView(title: "Error", message: "Device is not connected to internet. Please check connection and try again.", delegate: nil, cancelButtonTitle: "OK").show()
+                self.showNetworkError()
                 completionBlock(result: nil, error: nil, allPagesLoaded: false)
             }
         }
+    }
+
+    func isInvalidRequest(jsonResult:NSDictionary)-> (Bool) {
+        var status = jsonResult.objectForKey("status") as? NSString
+        return ( status!.isEqualToString("INVALID_REQUEST"))
+    }
+    
+    func processJSONResult(jsonResult:NSDictionary) {
+      
+        var fetchedResult = jsonResult.objectForKey("results") as? NSMutableArray
+        if (fetchedResult!.count > 0){
+            self.updateResult(fetchedResult!)
+            var latestValue = jsonResult["next_page_token"] as? String
+            if (latestValue == nil) {
+                self.allPagesLoaded = true
+                self.nextPageToken = nil
+            }else {
+                self.allPagesLoaded = false
+                self.nextPageToken = latestValue
+            }
+        }
+
     }
     
     func urlString()-> NSString {
@@ -136,6 +168,6 @@ class Paginator: NSObject {
         return URLString
     }
     
-
-
+    
+    
 }

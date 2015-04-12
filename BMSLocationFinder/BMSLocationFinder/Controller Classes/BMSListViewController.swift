@@ -20,13 +20,14 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     var radius: Int = 5000
     var shouldShowLoadMore: Bool = false
     var shouldShowFavorite: Bool = false
+    var isLoadingData:Bool = false
     var refreshControl: UIRefreshControl!
     var footerView: UIView?
     
     @IBOutlet weak var noResultMessageLabel: UILabel!
     @IBOutlet weak var noResultScreen: UIImageView!
     
-  //MARK: View LifeCycle Methods:-
+    //MARK: View LifeCycle Methods:-
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -45,7 +46,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
+    
     //MARK: User defined methods:-
     func configureTable() {
         // To check from where to show values in UITableView
@@ -61,7 +62,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     
     func refreshPlace(sender:AnyObject) {
         //Pull to refresh method
-      self.configureForPlaceType()
+        self.configureForPlaceType()
     }
     
     func configureForFavorites() {
@@ -73,7 +74,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     func configureForPlaceType() {
         self.sideMenuController()?.sideMenu?.delegate = self
         var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
-       
+        
         if checkInternetConnection {
             BMSUtil.showProressHUD()
             BMSNetworkManager.sharedInstance.fetchLocation({(location:CLLocation?,error:NSError?) -> () in
@@ -125,7 +126,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         footerView?.addSubview(activityIndicator)
     }
     
-   
+    
     func stringForPlaceType(placetype:PlaceType)-> NSString! {
         switch(placetype) {
         case PlaceType.Food: return "food"
@@ -168,7 +169,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return(self.placesArray)?.count ?? 0
+        return(self.placesArray)?.count ?? 0
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -184,10 +185,12 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         cell.configure(placeObject: self.placesArray?.objectAtIndex(indexPath.row) as Place)
         return cell
     }
-
+    
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if (indexPath.row == self.placesArray!.count - 1 && self.shouldShowLoadMore) {
+        if (indexPath.row == self.placesArray!.count - 1 && self.shouldShowLoadMore && !isLoadingData) {
+            println("should show loading")
+            
+            self.isLoadingData = true
             self.listTableView.tableFooterView = self.footerView
             (self.footerView?.viewWithTag(10) as UIActivityIndicatorView).startAnimating()
             
@@ -195,10 +198,13 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             var checkInternetConnection:Bool = IJReachability.isConnectedToNetwork()
             if checkInternetConnection {
                 BMSNetworkManager.sharedInstance.placePaginator?.loadNext({ (result, error, allPagesLoaded) -> () in
+                    self.isLoadingData = false
+                    
                     self.updatePlacesArray(result)
                     self.shouldShowLoadMore = !allPagesLoaded
                     self.listTableView.reloadData()
                     BMSUtil.hideProgressHUD()
+                    
                 })
                 
             }
@@ -223,7 +229,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
         var sortedResults: NSArray = self.placesArray!.sortedArrayUsingDescriptors(NSArray(object: descriptor!))
         self.placesArray = sortedResults
     }
-
+    
     func registerNotification() {
         //Register notification to load the table with new data
         NSNotificationCenter.defaultCenter().addObserver(
@@ -232,7 +238,7 @@ class BMSListViewController: UIViewController, ENSideMenuDelegate {
             name: notificationStruct.didSetFavorite,
             object: nil)
     }
-
+    
     //MARK: Segue Method:-
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
